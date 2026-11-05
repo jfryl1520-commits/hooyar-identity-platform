@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود مدیر | هویار</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazir', 'Tahoma', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            width: 400px;
+            max-width: 90%;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        .success {
+            background: #efe;
+            color: #3c3;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+    <style>
+        body{background:radial-gradient(ellipse at 70% 12%,#1d3b49,transparent 45%),#0c1422!important}
+        .login-container{background:#142135!important;color:#edf3fb;border:1px solid #2a3b52;border-radius:18px!important;box-shadow:0 30px 90px #0007!important}
+        h2{color:#edf3fb!important;font-size:22px!important}label{color:#aab9cd!important}
+        input{background:#0e1928!important;color:#edf3fb!important;border:1px solid #2b3b52!important;border-radius:9px!important}
+        input:focus{border-color:#67e1c1!important}button{background:linear-gradient(135deg,#67e1c1,#45b7a7)!important;color:#0b2823!important;border-radius:9px!important}
+        .error{background:#37232b!important;color:#ffc0c6!important}
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>🔐 ورود به هویار</h2>
+        <div class="error" id="errorMsg"></div>
+        <div class="success" id="successMsg"></div>
+        <form id="loginForm">
+            <div class="form-group">
+                <label>نام کاربری</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group">
+                <label>رمز عبور</label>
+                <input type="password" id="password" required>
+            </div>
+            <div class="form-group" id="mfaGroup" style="display:none">
+                <label>کد یک‌بارمصرف برنامه‌ی احراز هویت</label>
+                <input type="text" id="mfaCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" placeholder="۱۲۳۴۵۶">
+            </div>
+            <button type="submit">ورود به پنل</button>
+        </form>
+    </div>
+
+    <script>
+        const API_URL = '/api';
+        let mfaChallenge = null;
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('errorMsg');
+            const successMsg = document.getElementById('successMsg');
+
+            errorMsg.style.display = 'none';
+            successMsg.style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_URL}/auth/admin/${mfaChallenge ? 'verify-mfa' : 'login'}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(mfaChallenge ? { challenge_token: mfaChallenge, code: document.getElementById('mfaCode').value } : { username, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    if (data.mfa_required) {
+                        mfaChallenge = data.challenge_token;
+                        document.getElementById('mfaGroup').style.display = 'block';
+                        document.getElementById('mfaCode').required = true;
+                        document.getElementById('mfaCode').focus();
+                        document.querySelector('#loginForm button[type="submit"]').textContent = 'تأیید و ورود';
+                        successMsg.textContent = 'کد برنامه‌ی احراز هویت را وارد کنید.';
+                        successMsg.style.display = 'block';
+                        return;
+                    }
+                    localStorage.setItem('adminToken', data.token);
+                    localStorage.setItem('adminInfo', JSON.stringify(data.admin));
+                    successMsg.textContent = 'ورود موفق! در حال انتقال...';
+                    successMsg.style.display = 'block';
+                    setTimeout(() => {
+                        window.location.href = 'admin-dashboard.html';
+                    }, 1000);
+                } else {
+                    if (response.status === 401 && mfaChallenge) document.getElementById('mfaCode').value = '';
+                    errorMsg.textContent = data.message;
+                    errorMsg.style.display = 'block';
+                }
+            } catch (error) {
+                errorMsg.textContent = 'خطا در اتصال به سرور';
+                errorMsg.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

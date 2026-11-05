@@ -1,0 +1,10 @@
+node_modules/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+database.sqlite
+config/database.sqlite
+import-data.js
+exports/

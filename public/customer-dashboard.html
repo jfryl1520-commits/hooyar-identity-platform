@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل مشتری</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazir', 'Tahoma', sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .header-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .welcome-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .welcome-card h2 {
+            color: #667eea;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .info-card h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #666;
+            font-weight: bold;
+        }
+
+        .info-value {
+            color: #333;
+            text-align: left;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 18px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📋 پنل کاربری مشتری</h1>
+        <div class="header-info">
+            <span id="customerName"></span>
+            <button class="logout-btn" onclick="logout()">خروج</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="welcome-card">
+            <h2>خوش آمدید</h2>
+            <p>در این پنل می‌توانید تمام اطلاعات و وضعیت خود را مشاهده کنید</p>
+        </div>
+
+        <div id="loadingMsg" class="loading">در حال بارگذاری اطلاعات...</div>
+
+        <div id="customerInfo" style="display: none;">
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>اطلاعات شخصی</h3>
+                    <div class="info-row">
+                        <span class="info-label">نام:</span>
+                        <span class="info-value" id="name"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">نام خانوادگی:</span>
+                        <span class="info-value" id="family_name"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">نام پدر:</span>
+                        <span class="info-value" id="father_name"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">تاریخ تولد:</span>
+                        <span class="info-value" id="birth_date"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">شماره موبایل:</span>
+                        <span class="info-value" id="mobile_phone"></span>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>اطلاعات تحصیلی و فرهنگی</h3>
+                    <div class="info-row">
+                        <span class="info-label">تحصیلات:</span>
+                        <span class="info-value" id="education"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">زبان:</span>
+                        <span class="info-value" id="language"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">قومیت:</span>
+                        <span class="info-value" id="ethnicity"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">وضعیت تاهل:</span>
+                        <span class="info-value" id="marital_status"></span>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>اطلاعات مکانی</h3>
+                    <div class="info-row">
+                        <span class="info-label">استان:</span>
+                        <span class="info-value" id="province"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">ولایت:</span>
+                        <span class="info-value" id="state"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">محل خدمت:</span>
+                        <span class="info-value" id="service_location"></span>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>اطلاعات مدارک</h3>
+                    <div class="info-row">
+                        <span class="info-label">نوع مدرک:</span>
+                        <span class="info-value" id="document_type"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">شماره مدرک:</span>
+                        <span class="info-value" id="document_number"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">وضعیت:</span>
+                        <span class="info-value" id="status"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card" style="margin-top: 20px;" id="activityCard">
+                <h3>سابقه فعالیت</h3>
+                <p id="activity_history" style="line-height: 1.8; color: #555;"></p>
+            </div>
+
+            <div class="info-card" style="margin-top: 20px;" id="notesCard">
+                <h3>یادداشت‌ها</h3>
+                <p id="notes" style="line-height: 1.8; color: #555;"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = '/api';
+        const token = localStorage.getItem('customerToken');
+
+        if (!token) {
+            window.location.href = 'customer-login.html';
+        }
+
+        async function loadProfile() {
+            try {
+                const response = await fetch(`${API_URL}/customer/profile`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    displayProfile(data.customer);
+                } else {
+                    alert('خطا در دریافت اطلاعات');
+                    logout();
+                }
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                alert('خطا در اتصال به سرور');
+            }
+        }
+
+        function displayProfile(customer) {
+            document.getElementById('loadingMsg').style.display = 'none';
+            document.getElementById('customerInfo').style.display = 'block';
+
+            document.getElementById('customerName').textContent = customer.name + ' ' + (customer.family_name || '');
+
+            document.getElementById('name').textContent = customer.name || '-';
+            document.getElementById('family_name').textContent = customer.family_name || '-';
+            document.getElementById('father_name').textContent = customer.father_name || '-';
+            document.getElementById('birth_date').textContent = customer.birth_date || '-';
+            document.getElementById('mobile_phone').textContent = customer.mobile_phone || '-';
+
+            document.getElementById('education').textContent = customer.education || '-';
+            document.getElementById('language').textContent = customer.language || '-';
+            document.getElementById('ethnicity').textContent = customer.ethnicity || '-';
+            document.getElementById('marital_status').textContent = customer.marital_status || '-';
+
+            document.getElementById('province').textContent = customer.province || '-';
+            document.getElementById('state').textContent = customer.state || '-';
+            document.getElementById('service_location').textContent = customer.service_location || '-';
+
+            document.getElementById('document_type').textContent = customer.document_type || '-';
+            document.getElementById('document_number').textContent = customer.document_number || '-';
+
+            const statusElement = document.getElementById('status');
+            const statusBadge = `<span class="status-badge ${customer.status === 'فعال' ? 'status-active' : 'status-inactive'}">${customer.status || 'نامشخص'}</span>`;
+            statusElement.innerHTML = statusBadge;
+
+            if (customer.activity_history) {
+                document.getElementById('activity_history').textContent = customer.activity_history;
+            } else {
+                document.getElementById('activityCard').style.display = 'none';
+            }
+
+            if (customer.notes) {
+                document.getElementById('notes').textContent = customer.notes;
+            } else {
+                document.getElementById('notesCard').style.display = 'none';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('customerToken');
+            localStorage.removeItem('customerInfo');
+            window.location.href = 'customer-login.html';
+        }
+
+        loadProfile();
+    </script>
+</body>
+</html>
