@@ -30,6 +30,24 @@ router.get('/profile', authMiddleware, customerMiddleware, async (req, res) => {
     }
 });
 
+router.post('/services', authMiddleware, customerMiddleware, async (req, res) => {
+    try {
+        const title = String(req.body.title || '').trim().slice(0, 120);
+        const description = String(req.body.description || '').trim().slice(0, 1000);
+        if (!title) return res.status(400).json({ success: false, message: 'عنوان درخواست الزامی است' });
+
+        const result = await db.query(
+            "INSERT INTO services (customer_id, title, description, status) VALUES (?, ?, ?, 'در حال بررسی')",
+            [req.user.id, title, description || null]
+        );
+        db.log('customer', req.user.mobile, 'ثبت درخواست خدمت', result[0].insertId, title, null, req.ip);
+        res.status(201).json({ success: true, id: result[0].insertId, message: 'درخواست شما ثبت شد' });
+    } catch (error) {
+        console.error('Create customer service error:', error);
+        res.status(500).json({ success: false, message: 'خطا در ثبت درخواست' });
+    }
+});
+
 router.put('/profile/contact', authMiddleware, customerMiddleware, async (req, res) => {
     try {
         const address = String(req.body.address || '').slice(0, 500);

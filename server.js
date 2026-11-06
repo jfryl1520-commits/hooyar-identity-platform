@@ -25,6 +25,10 @@ app.use(express.json({ limit: '100kb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/health', (req, res) => {
+    res.json({ success: true, status: 'ok' });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/customer', customerRoutes);
 app.use('/api/admin', adminRoutes);
@@ -63,7 +67,7 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, process.env.HOST || '127.0.0.1', () => {
+app.listen(PORT, process.env.HOST || '0.0.0.0', () => {
     console.log(`🚀 سرور روی پورت ${PORT} راه‌اندازی شد`);
     console.log(`📍 آدرس: http://localhost:${PORT}`);
 });

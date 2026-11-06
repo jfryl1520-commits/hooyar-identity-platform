@@ -245,6 +245,17 @@
                 <h3>یادداشت‌ها</h3>
                 <p id="notes" style="line-height: 1.8; color: #555;"></p>
             </div>
+
+            <div class="info-card" style="margin-top: 20px;">
+                <h3>درخواست‌های خدمات</h3>
+                <form id="serviceForm" style="display:grid;gap:10px;margin-bottom:18px;">
+                    <input name="title" required maxlength="120" placeholder="عنوان درخواست" style="padding:11px;border:1px solid #ddd;border-radius:7px;font:inherit">
+                    <textarea name="description" maxlength="1000" rows="3" placeholder="توضیحات تکمیلی (اختیاری)" style="padding:11px;border:1px solid #ddd;border-radius:7px;font:inherit;resize:vertical"></textarea>
+                    <button type="submit" class="logout-btn" style="background:#667eea;border:0;justify-self:start">ثبت درخواست</button>
+                    <p id="serviceMessage" role="status" style="color:#555"></p>
+                </form>
+                <div id="serviceList" style="display:grid;gap:10px"></div>
+            </div>
         </div>
     </div>
 
@@ -265,7 +276,7 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    displayProfile(data.customer);
+                    displayProfile(data.customer, data.services || []);
                 } else {
                     alert('خطا در دریافت اطلاعات');
                     logout();
@@ -276,7 +287,7 @@
             }
         }
 
-        function displayProfile(customer) {
+        function displayProfile(customer, services) {
             document.getElementById('loadingMsg').style.display = 'none';
             document.getElementById('customerInfo').style.display = 'block';
 
@@ -315,7 +326,47 @@
             } else {
                 document.getElementById('notesCard').style.display = 'none';
             }
+
+            const serviceList = document.getElementById('serviceList');
+            serviceList.textContent = '';
+            if (!services.length) {
+                serviceList.textContent = 'هنوز درخواستی ثبت نشده است.';
+            } else {
+                services.forEach(service => {
+                    const item = document.createElement('div');
+                    item.style.cssText = 'padding:12px;border:1px solid #eee;border-radius:8px';
+                    const title = document.createElement('strong');
+                    title.textContent = `${service.title} — ${service.status}`;
+                    const description = document.createElement('p');
+                    description.textContent = service.description || '';
+                    description.style.cssText = 'margin-top:6px;color:#666';
+                    item.append(title, description);
+                    serviceList.append(item);
+                });
+            }
         }
+
+        document.getElementById('serviceForm').addEventListener('submit', async event => {
+            event.preventDefault();
+            const form = event.currentTarget;
+            const message = document.getElementById('serviceMessage');
+            const payload = Object.fromEntries(new FormData(form));
+            try {
+                const response = await fetch(`${API_URL}/customer/services`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                message.textContent = result.message || 'خطا در ثبت درخواست';
+                if (response.ok && result.success) {
+                    form.reset();
+                    loadProfile();
+                }
+            } catch {
+                message.textContent = 'خطا در اتصال به سرور';
+            }
+        });
 
         function logout() {
             localStorage.removeItem('customerToken');
