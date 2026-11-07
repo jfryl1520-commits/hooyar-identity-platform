@@ -1,55 +1,597 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#101a2b"><title>هویار | مرکز عملیات هویت</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
-    :root{font-family:Vazirmatn,Tahoma,sans-serif;color:#eaf0fa;background:#0c1422;font-synthesis:none;--panel:#131f31;--panel2:#17253a;--line:#26364d;--muted:#8e9db3;--mint:#67e1c1;--blue:#8ba9ff;--amber:#f4c875;--red:#fa8291}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 82% 0%,#1d3246 0,transparent 35%),#0c1422}.shell{display:grid;grid-template-columns:246px minmax(0,1fr);min-height:100vh}.sidebar{border-left:1px solid var(--line);background:rgba(12,20,34,.9);padding:26px 17px;display:flex;flex-direction:column;gap:30px}.brand{display:flex;align-items:center;gap:12px;padding:3px 8px}.brand-mark{width:40px;height:40px;border-radius:14px;background:linear-gradient(145deg,#76edd0,#44aeae);display:grid;place-items:center;color:#102a31;font-size:20px;font-weight:800;box-shadow:0 8px 26px #4ac6ae38}.brand strong{font-size:17px;letter-spacing:-.4px}.brand small{display:block;color:var(--muted);font-size:10px;margin-top:2px}.nav-label{padding:0 12px;color:#6f819b;font-size:10px;font-weight:700;letter-spacing:.7px}.nav{display:grid;gap:5px;margin-top:-20px}.nav a{color:#9dadc2;text-decoration:none;padding:11px 13px;border-radius:11px;font-size:12px;display:flex;gap:11px;align-items:center;transition:.2s}.nav a:hover,.nav a.selected{color:#eaf8f3;background:#193038}.nav a.selected{box-shadow:inset -2px 0 var(--mint)}.nav .ico{font-size:16px;width:20px;text-align:center}.side-bottom{margin-top:auto}.secure-note{background:#121f30;border:1px solid var(--line);border-radius:14px;padding:14px;color:#9cafc5;font-size:10px;line-height:1.9}.secure-note b{color:var(--mint);font-size:11px}.secure-note .dot{display:inline-block;width:7px;height:7px;background:var(--mint);border-radius:100%;margin-left:6px;box-shadow:0 0 10px #67e1c1}.side-admin{display:flex;align-items:center;gap:10px;padding:16px 5px 0}.avatar{width:34px;height:34px;border-radius:12px;background:#283b58;display:grid;place-items:center;color:#b8ccff;font-weight:700;font-size:12px}.side-admin b{font-size:11px;display:block}.side-admin small{display:block;color:var(--muted);font-size:9px}.main{min-width:0;padding:27px 36px 42px;max-width:1600px;width:100%;margin:auto}.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}.crumb{font-size:10px;color:var(--muted)}.crumb span{color:#647790;margin:0 8px}.toolbar{display:flex;align-items:center;gap:10px}.today{font-size:10px;color:var(--muted);padding-left:8px}.icon-btn,.logout{border:1px solid var(--line);background:#142136;color:#d4e0f1;border-radius:10px;padding:9px 12px;font:inherit;font-size:11px;cursor:pointer}.logout{color:#ffb4bc;background:#281b29;border-color:#52303c}.hero{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:25px}.hero h1{font-size:25px;margin:0 0 7px;letter-spacing:-.7px}.hero p{margin:0;color:var(--muted);font-size:11px}.primary{border:0;color:#08271f;background:var(--mint);border-radius:10px;padding:11px 17px;font:inherit;font-weight:700;font-size:11px;cursor:pointer;box-shadow:0 7px 25px #50d5b32a}.primary:hover{filter:brightness(1.08);transform:translateY(-1px)}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:16px}.card{background:linear-gradient(145deg,#17253a,#121d2d);border:1px solid var(--line);border-radius:15px;padding:17px;min-width:0;box-shadow:0 8px 24px #0000000c}.stat-head{display:flex;justify-content:space-between;align-items:center;color:#aab9cd;font-size:10px}.stat-icon{width:30px;height:30px;display:grid;place-items:center;border-radius:10px;background:#203346;color:var(--mint);font-size:14px}.stat-value{font-size:27px;font-weight:700;margin:12px 0 3px;letter-spacing:.3px}.stat-foot{font-size:9px;color:var(--muted)}.stat-foot em{font-style:normal;color:var(--mint)}.grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(255px,.8fr);gap:15px;margin-bottom:16px}.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.section-head h2{font-size:12px;margin:0}.section-head small{font-size:9px;color:var(--muted)}.chart{height:185px;display:flex;align-items:end;gap:12px;padding:10px 4px 24px;border-bottom:1px solid var(--line);position:relative}.bar-group{height:100%;flex:1;display:flex;align-items:center;justify-content:end;flex-direction:column;gap:7px;position:relative}.bar-wrap{height:100%;width:min(30px,75%);display:flex;align-items:end;overflow:hidden;border-radius:7px 7px 2px 2px;background:#1c2c40}.bar{width:100%;min-height:3px;border-radius:7px 7px 2px 2px;background:linear-gradient(0deg,#3c9f9a,#75e4c1);transition:height .5s}.bar-label{position:absolute;bottom:-22px;font-size:8px;color:#8294aa}.bar-value{font-size:8px;color:#92a6bc}.queue{display:flex;flex-direction:column;gap:9px}.queue-row{display:flex;align-items:center;gap:10px;padding:10px;border-radius:11px;background:#101b2a;border:1px solid #1d2a3c}.queue-icon{width:30px;height:30px;flex:none;border-radius:9px;background:#332e24;color:var(--amber);display:grid;place-items:center}.queue-name{font-size:10px;font-weight:600}.queue-meta{font-size:8px;color:var(--muted);margin-top:3px}.queue-row button{margin-right:auto;border:1px solid #3a4a60;border-radius:8px;background:transparent;color:#c4d1e1;padding:6px 9px;font:inherit;font-size:9px;cursor:pointer}.table-card{padding:0;overflow:hidden}.table-head{padding:17px 18px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px}.table-head h2{margin:0;font-size:12px}.search-wrap{display:flex;gap:8px;align-items:center}.search-wrap input,.search-wrap select{border:1px solid var(--line);background:#0f1b2b;color:#e5edf8;border-radius:9px;padding:9px 11px;font:inherit;font-size:10px;outline:none}.search-wrap input{width:205px}.search-wrap input:focus{border-color:#55c7ad}.search-wrap select{min-width:110px}table{width:100%;border-collapse:collapse;text-align:right;white-space:nowrap}thead{background:#101a29;color:#8193aa;font-size:9px}th{padding:11px 18px;font-weight:500}td{padding:12px 18px;border-top:1px solid #202d40;font-size:10px;color:#c7d2e1}tbody tr:hover{background:#19273a}.person{display:flex;align-items:center;gap:9px}.person-avatar{width:29px;height:29px;border-radius:9px;background:#263954;color:#b9ceef;display:grid;place-items:center;font-weight:700}.person b{display:block;color:#e5edf7;font-weight:600}.person small{display:block;color:#8494aa;font-size:8px;margin-top:3px}.badge{font-size:8px;border-radius:20px;padding:5px 9px;display:inline-flex;align-items:center;gap:5px}.badge:before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor}.badge.ok{background:#18352e;color:#73dfb4}.badge.wait{background:#392f20;color:#f1c976}.badge.off{background:#37232b;color:#f18d9b}.row-action{border:1px solid #314057;border-radius:8px;background:transparent;color:#bdd0e6;padding:6px 9px;font:inherit;font-size:9px;cursor:pointer}.empty{text-align:center;padding:32px;color:var(--muted);font-size:11px}.table-foot{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-top:1px solid var(--line);font-size:9px;color:var(--muted)}.pages{display:flex;gap:5px}.pages button{border:1px solid var(--line);background:#152237;color:#becbdc;border-radius:7px;padding:6px 9px;font:inherit;cursor:pointer}.pages button.active{background:#24423e;color:var(--mint);border-color:#326357}.scrim{position:fixed;inset:0;background:#070d17c9;backdrop-filter:blur(5px);display:none;align-items:center;justify-content:center;padding:18px;z-index:4}.scrim.open{display:flex}.modal{width:min(560px,100%);max-height:90vh;overflow:auto;background:#152237;border:1px solid #2c3e56;border-radius:17px;padding:23px;box-shadow:0 30px 90px #0008}.modal h2{margin:0 0 5px;font-size:17px}.modal>p{margin:0 0 20px;color:var(--muted);font-size:10px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;margin-bottom:6px;color:#9cacc0;font-size:9px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);background:#0e1928;color:#edf2fa;border-radius:9px;padding:10px;font:inherit;font-size:10px;outline:0}.field textarea{min-height:70px;resize:vertical}.wide{grid-column:1/-1}.form-actions{display:flex;justify-content:flex-start;gap:9px;margin-top:18px}.secondary{border:1px solid var(--line);background:#1c2b40;color:#c5d1e1;border-radius:9px;padding:10px 15px;font:inherit;font-size:10px;cursor:pointer}.toast{position:fixed;bottom:22px;right:22px;background:#18372f;border:1px solid #326454;color:#b5f2dc;padding:12px 17px;border-radius:11px;font-size:11px;opacity:0;transform:translateY(8px);transition:.25s;pointer-events:none;z-index:9}.toast.show{opacity:1;transform:translateY(0)}.toast.bad{background:#3b222b;border-color:#663542;color:#ffc0c6}.mobile-menu{display:none}
-    .security-copy{font-size:10px;color:var(--muted);line-height:1.9;margin:-3px 0 14px}.security-row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.security-row input{border:1px solid var(--line);background:#0e1928;color:#edf3fb;border-radius:9px;padding:9px 11px;font:inherit;font-size:10px}.security-status{font-size:9px;border-radius:20px;padding:5px 9px;background:#392f20;color:var(--amber)}.security-status.enabled{background:#18352e;color:#73dfb4}.mfa-setup{margin-top:14px;background:#101b2a;border:1px solid var(--line);border-radius:12px;padding:14px;font-size:10px;color:#b5c4d7}.mfa-setup code{display:block;direction:ltr;text-align:left;overflow-wrap:anywhere;background:#0b1421;border-radius:8px;padding:11px;margin:9px 0;color:var(--mint);font-size:11px;user-select:all}.mfa-setup input{border:1px solid var(--line);background:#0e1928;color:#edf3fb;border-radius:9px;padding:9px 11px;font:inherit;font-size:10px;margin-top:8px;width:155px}
-    @media(max-width:1050px){.main{padding:24px}.sidebar{width:205px}.shell{grid-template-columns:205px 1fr}.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.queue{display:grid;grid-template-columns:repeat(2,1fr)}}@media(max-width:720px){.shell{display:block}.sidebar{display:none}.main{padding:18px 14px}.topbar{margin-bottom:22px}.today{display:none}.hero{align-items:start;flex-direction:column}.hero h1{font-size:22px}.hero .primary{width:100%}.stats{gap:9px}.card{padding:13px}.stat-value{font-size:23px}.table-head{align-items:stretch;flex-direction:column}.search-wrap{width:100%}.search-wrap input{width:100%;min-width:0}.table-scroll{overflow:auto}.grid{gap:10px}.queue{grid-template-columns:1fr}.crumb{font-size:9px}}
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0e9f8a">
+  <title>هویار | مرکز عملیات هویت</title>
+  <link rel="stylesheet" href="/styles/design-system.css">
 </head>
 <body>
 <div class="shell">
   <aside class="sidebar">
     <div class="brand"><div class="brand-mark">ه</div><div><strong>هویار</strong><small>سامانه مدیریت هویت</small></div></div>
-    <div class="nav-label">فضای کاری</div><nav class="nav"><a class="selected" href="#overview"><span class="ico">◫</span>نمای کلی</a><a href="#records"><span class="ico">▤</span>پرونده‌های هویتی</a><a href="#review"><span class="ico">◷</span>صف بررسی</a><a href="#records"><span class="ico">⌕</span>جست‌وجوی اشخاص</a></nav>
-    <div class="nav-label">مدیریت</div><nav class="nav"><a href="#activity"><span class="ico">⌁</span>گزارش فعالیت</a><a href="#securitySettings"><span class="ico">◇</span>امنیت و دسترسی</a></nav>
-    <div class="side-bottom"><div class="secure-note" id="security"><span class="dot"></span><b>اتصال امن سامانه</b><br>این نسخه برای محیط نمایشی است. تأیید هویت رسمی به اتصال سرویس مرجع نیاز دارد.</div><div class="side-admin"><div class="avatar" id="avatar">م</div><div><b id="adminName">مدیر سامانه</b><small>مدیر عملیات</small></div></div></div>
+    <div class="nav-label">فضای کاری</div>
+    <nav class="nav">
+      <a class="selected" href="#overview"><span class="ico" data-i="dash"></span>نمای کلی</a>
+      <a href="#records"><span class="ico" data-i="users"></span>پرونده‌های هویتی</a>
+      <a href="#review"><span class="ico" data-i="clock"></span>صف بررسی</a>
+      <a href="#services"><span class="ico" data-i="briefcase"></span>درخواست خدمات</a>
+      <a href="#logs"><span class="ico" data-i="activity"></span>گزارش فعالیت</a>
+    </nav>
+    <div class="nav-label">مدیریت</div>
+    <nav class="nav">
+      <a href="#security"><span class="ico" data-i="shield"></span>امنیت و دسترسی</a>
+    </nav>
+    <div class="side-bottom">
+      <div class="side-note" id="security-note"><b>اتصال امن سامانه</b><br>تمام فعالیت‌های مدیریتی در گزارش فعالیت ثبت می‌شود. این نسخه نمایشی است و تأیید هویت رسمی به اتصال سرویس مرجع نیاز دارد.</div>
+      <div class="side-user"><div class="avatar" id="avatar">م</div><div><b id="adminName">مدیر سامانه</b><small>مدیر عملیات</small></div></div>
+    </div>
   </aside>
+
   <main class="main" id="overview">
-    <div class="topbar"><div class="crumb">هویار <span>/</span> فضای کاری <span>/</span> <b>نمای کلی</b></div><div class="toolbar"><span class="today" id="today"></span><button class="icon-btn" onclick="refreshAll()" title="به‌روزرسانی">↻</button><button class="logout" onclick="logout()">خروج از حساب</button></div></div>
-    <section class="hero"><div><h1>مرکز عملیات هویت</h1><p>وضعیت پرونده‌ها و روند بررسی هویت را از یک‌جا مدیریت کنید.</p></div><button class="primary" onclick="openCreate()">＋　ثبت پرونده جدید</button></section>
-    <section class="stats"><article class="card"><div class="stat-head"><span>کل پرونده‌های ثبت‌شده</span><span class="stat-icon">▤</span></div><div class="stat-value" id="statTotal">—</div><div class="stat-foot">مجموع پرونده‌های سامانه</div></article><article class="card"><div class="stat-head"><span>پرونده‌های فعال</span><span class="stat-icon">✓</span></div><div class="stat-value" id="statActive">—</div><div class="stat-foot">وضعیت حساب فعال</div></article><article class="card"><div class="stat-head"><span>در انتظار بررسی</span><span class="stat-icon" style="color:var(--amber);background:#332e24">◷</span></div><div class="stat-value" id="statPending">—</div><div class="stat-foot">نیازمند اقدام کارشناسی</div></article><article class="card"><div class="stat-head"><span>تأییدشده در سامانه</span><span class="stat-icon">◆</span></div><div class="stat-value" id="statVerified">—</div><div class="stat-foot">وضعیت داخلی پرونده‌ها</div></article></section>
-    <section class="grid"><article class="card"><div class="section-head"><h2>روند ثبت پرونده</h2><small>بر اساس داده‌های سامانه</small></div><div class="chart" id="chart"><div class="empty">در حال دریافت آمار…</div></div></article><article class="card" id="review"><div class="section-head"><h2>نیازمند بررسی</h2><small id="queueCount">صف بررسی</small></div><div class="queue" id="queue"><div class="empty">در حال دریافت…</div></div></article></section>
-    <section class="card" id="securitySettings" style="margin-bottom:16px"><div class="section-head"><h2>امنیت حساب مدیر</h2><span id="mfaStatus" class="security-status">در حال دریافت وضعیت…</span></div><p class="security-copy">با فعال‌کردن کد یک‌بارمصرف، ورود مدیر علاوه بر گذرواژه به کد برنامه‌ی احراز هویت نیاز دارد. کدها هر ۳۰ ثانیه عوض می‌شوند و فقط یک‌بار پذیرفته می‌شوند.</p><div class="security-row"><input id="mfaCurrentPassword" type="password" autocomplete="current-password" placeholder="گذرواژه فعلی مدیر"><button class="secondary" id="mfaStartBtn" onclick="startMfaSetup()">راه‌اندازی کد یک‌بارمصرف</button><input id="mfaDisableCode" inputmode="numeric" maxlength="6" placeholder="کد ۶ رقمی" style="display:none"><button class="secondary" id="mfaDisableBtn" onclick="disableMfa()" style="display:none">غیرفعال‌سازی با تأیید</button></div><div class="mfa-setup" id="mfaSetupBox" style="display:none">در برنامه‌ی احراز هویت، کلید زیر را به‌صورت دستی اضافه کنید. این کلید فقط هنگام راه‌اندازی نمایش داده می‌شود.<code id="mfaSecret"></code><button class="secondary" onclick="copyMfaSecret()">کپی کلید</button><div><input id="mfaEnableCode" inputmode="numeric" maxlength="6" placeholder="کد برنامه را وارد کنید"><button class="primary" onclick="enableMfa()">تأیید و فعال‌سازی</button></div></div></section>
-    <section class="card table-card" id="records"><div class="table-head"><div><h2>پرونده‌های هویتی</h2><small style="display:block;color:var(--muted);font-size:9px;margin-top:4px">مرور و پیگیری پرونده‌های ثبت‌شده</small></div><div class="search-wrap"><input id="searchInput" placeholder="نام، شماره پرونده یا موبایل…" onkeydown="if(event.key==='Enter')loadRecords(1)"><select id="statusFilter" onchange="loadRecords(1)"><option value="">همه وضعیت‌ها</option><option value="فعال">فعال</option><option value="غیرفعال">غیرفعال</option><option value="مسدود">مسدود</option></select><button class="icon-btn" onclick="loadRecords(1)">جست‌وجو</button></div></div><div class="table-scroll"><table><thead><tr><th>فرد</th><th>شناسه پرونده</th><th>موبایل</th><th>محدوده</th><th>وضعیت حساب</th><th>بررسی هویت</th><th></th></tr></thead><tbody id="recordsBody"><tr><td colspan="7" class="empty">در حال بارگذاری پرونده‌ها…</td></tr></tbody></table></div><div class="table-foot"><span id="tableSummary">—</span><div class="pages" id="pages"></div></div></section>
+    <div class="topbar">
+      <div class="crumb">هویار <span>/</span> فضای کاری <span>/</span> <b>نمای کلی</b></div>
+      <div class="toolbar">
+        <span class="today" id="today"></span>
+        <button class="icon-btn" id="themeBtn" title="تغییر پوسته"></button>
+        <button class="icon-btn" onclick="refreshAll()" title="به‌روزرسانی" id="refreshBtn" data-i="refresh"></button>
+        <button class="logout" onclick="logout()">خروج از حساب</button>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div>
+        <h1>مرکز عملیات هویت</h1>
+        <p>وضعیت پرونده‌ها، صف بررسی و روند ثبت را از یک‌جا مدیریت کنید.</p>
+      </div>
+      <div style="display:flex;gap:9px;flex-wrap:wrap">
+        <button class="btn btn-outline" onclick="exportCsv()" id="exportBtn" data-i="download">خروجی پرونده‌ها</button>
+        <button class="btn btn-primary" onclick="openCreate()" id="createBtn" data-i="plus">ثبت پرونده جدید</button>
+      </div>
+    </section>
+
+    <section class="stats">
+      <article class="card stat-card">
+        <div class="stat-head"><span>کل پرونده‌ها</span><span class="stat-ico" data-i="users"></span></div>
+        <div class="stat-value" id="statTotal">—</div>
+        <div class="stat-foot">مجموع پرونده‌های سامانه</div>
+      </article>
+      <article class="card stat-card">
+        <div class="stat-head"><span>حساب فعال</span><span class="stat-ico" data-i="check"></span></div>
+        <div class="stat-value" id="statActive">—</div>
+        <div class="stat-foot">وضعیت حساب فعال</div>
+      </article>
+      <article class="card stat-card">
+        <div class="stat-head"><span>در انتظار بررسی</span><span class="stat-ico" style="color:var(--warn-ink);background:var(--warn-soft)" data-i="clock"></span></div>
+        <div class="stat-value" id="statPending">—</div>
+        <div class="stat-foot">نیازمند اقدام کارشناسی</div>
+      </article>
+      <article class="card stat-card">
+        <div class="stat-head"><span>تأییدشده</span><span class="stat-ico" style="color:var(--ok-ink);background:var(--ok-soft)" data-i="checkCircle"></span></div>
+        <div class="stat-value" id="statVerified">—</div>
+        <div class="stat-foot">وضعیت داخلی پرونده‌ها</div>
+      </article>
+    </section>
+
+    <section class="grid-2">
+      <article class="card">
+        <div class="section-head"><h2>روند ثبت پرونده</h2><small>بر اساس ماه‌های اخیر</small></div>
+        <div class="chart" id="chart"><div class="empty">در حال دریافت آمار…</div></div>
+      </article>
+      <article class="card" id="review">
+        <div class="section-head"><h2>نیازمند بررسی</h2><small id="queueCount">صف بررسی</small></div>
+        <div class="queue" id="queue"><div class="empty">در حال دریافت…</div></div>
+      </article>
+    </section>
+
+    <section class="grid-3">
+      <article class="card">
+        <div class="section-head"><h2>ترکیب جغرافیایی</h2><small>بیشترین استان‌ها</small></div>
+        <div id="demoProvince"><div class="empty">—</div></div>
+      </article>
+      <article class="card">
+        <div class="section-head"><h2>سطح تحصیلات</h2><small>پراستان‌ها</small></div>
+        <div id="demoEducation"><div class="empty">—</div></div>
+      </article>
+      <article class="card">
+        <div class="section-head"><h2>ترکیب قومیتی</h2><small>پرچنگارها</small></div>
+        <div id="demoEthnicity"><div class="empty">—</div></div>
+      </article>
+    </section>
+
+    <section class="card sec" id="security">
+      <div class="section-head"><h2>امنیت حساب مدیر</h2><span id="mfaStatus" class="mfa-status">در حال دریافت وضعیت…</span></div>
+      <p class="mfa-copy">با فعال‌کردن کد یک‌بارمصرف، ورود مدیر علاوه بر گذرواژه به کد برنامه‌ی احراز هویت نیاز دارد. کدها هر ۳۰ ثانیه عوض می‌شوند و فقط یک‌بار پذیرفته می‌شوند.</p>
+      <div class="mfa-row">
+        <input id="mfaCurrentPassword" class="input" type="password" autocomplete="current-password" placeholder="گذرواژه فعلی مدیر" style="max-width:230px">
+        <input id="mfaDisableCode" class="input mono" inputmode="numeric" maxlength="6" placeholder="کد ۶ رقمی" style="display:none;max-width:140px">
+        <button class="btn btn-outline btn-sm" id="mfaStartBtn" onclick="startMfaSetup()">راه‌اندازی کد یک‌بارمصرف</button>
+        <button class="btn btn-danger btn-sm" id="mfaDisableBtn" onclick="disableMfa()" style="display:none">غیرفعال‌سازی با تأیید</button>
+      </div>
+      <div class="mfa-secret" id="mfaSetupBox" style="display:none">
+        در برنامه‌ی احراز هویت، کلید زیر را به‌صورت دستی اضافه کنید. این کلید فقط هنگام راه‌اندازی نمایش داده می‌شود.
+        <div class="mfa-key-row"><code id="mfaSecret"></code><button class="btn btn-ghost btn-sm" onclick="copyMfaSecret()">کپی کلید</button></div>
+        <div class="mfa-row">
+          <input id="mfaEnableCode" class="input mono" inputmode="numeric" maxlength="6" placeholder="کد برنامه" style="max-width:140px">
+          <button class="btn btn-primary btn-sm" onclick="enableMfa()">تأیید و فعال‌سازی</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card table-card sec" id="records">
+      <div class="table-head">
+        <div><h2>پرونده‌های هویتی</h2><small style="display:block;color:var(--faint);font-size:9.5px;margin-top:3px">مرور، جست‌وجو و پیگیری پرونده‌های ثبت‌شده</small></div>
+        <div class="filters">
+          <input class="input" type="search" id="searchInput" placeholder="نام، کد پرونده یا موبایل…" onkeydown="if(event.key==='Enter')loadRecords(1)">
+          <select class="input" id="statusFilter" onchange="loadRecords(1)"><option value="">همه وضعیت‌ها</option><option value="فعال">فعال</option><option value="غیرفعال">غیرفعال</option><option value="مسدود">مسدود</option></select>
+          <select class="input" id="verificationFilter" onchange="loadRecords(1)"><option value="">همه بررسی‌ها</option><option value="در انتظار بررسی">در انتظار بررسی</option><option value="تأیید شده">تأیید شده</option><option value="رد شده">رد شده</option></select>
+          <select class="input" id="sortFilter" onchange="loadRecords(1)"><option value="newest">جدیدترین</option><option value="oldest">قدیمی‌ترین</option><option value="name">نام</option><option value="family">نام خانوادگی</option></select>
+          <button class="btn btn-primary btn-sm" onclick="loadRecords(1)">جست‌وجو</button>
+        </div>
+      </div>
+      <div class="table-scroll"><table>
+        <thead><tr><th>فرد</th><th>کد پرونده</th><th>موبایل</th><th>استان</th><th>وضعیت حساب</th><th>بررسی هویت</th><th>مدیریت</th></tr></thead>
+        <tbody id="recordsBody"><tr><td colspan="7" class="empty">در حال بارگذاری پرونده‌ها…</td></tr></tbody>
+      </table></div>
+      <div class="table-foot"><span id="tableSummary">—</span><div class="pages" id="pages"></div></div>
+    </section>
+
+    <section class="card table-card sec" id="services">
+      <div class="table-head">
+        <div><h2>درخواست‌های خدمات</h2><small style="display:block;color:var(--faint);font-size:9.5px;margin-top:3px">پیگیری و تغییر وضعیت درخواست‌های ثبت‌شده</small></div>
+        <span class="badge plain" id="servicesCount">—</span>
+      </div>
+      <div class="table-scroll"><table>
+        <thead><tr><th>متقاضی</th><th>عنوان درخواست</th><th>توضیح</th><th>وضعیت</th><th>تاریخ</th></tr></thead>
+        <tbody id="servicesBody"><tr><td colspan="5" class="empty">در حال دریافت…</td></tr></tbody>
+      </table></div>
+    </section>
+
+    <section class="card table-card sec" id="logs">
+      <div class="table-head">
+        <div><h2>گزارش فعالیت</h2><small style="display:block;color:var(--faint);font-size:9.5px;margin-top:3px">تراکنش‌های اخیر مدیران و مشتریان</small></div>
+      </div>
+      <div class="table-scroll"><table>
+        <thead><tr><th>زمان</th><th>کنشگر</th><th>عمل</th><th>هدف</th><th>جزئیات</th></tr></thead>
+        <tbody id="logsBody"><tr><td colspan="5" class="empty">در حال دریافت…</td></tr></tbody>
+      </table></div>
+    </section>
   </main>
 </div>
-<div class="scrim" id="createScrim" onclick="if(event.target===this)closeCreate()"><form class="modal" id="createForm"><h2>ثبت پرونده هویتی</h2><p>اطلاعات پایه را وارد کنید تا پرونده در صف بررسی قرار بگیرد.</p><div class="form-grid"><div class="field"><label>نام *</label><input name="name" required maxlength="100"></div><div class="field"><label>نام خانوادگی</label><input name="family_name" maxlength="100"></div><div class="field"><label>نام پدر</label><input name="father_name" maxlength="100"></div><div class="field"><label>تاریخ تولد</label><input name="birth_date" placeholder="۱۳۷۰/۰۱/۱۵"></div><div class="field"><label>کد ملی / شناسه</label><input name="national_id" maxlength="30"></div><div class="field"><label>شماره همراه *</label><input name="mobile_phone" required inputmode="tel" maxlength="15"></div><div class="field"><label>استان / ولایت</label><input name="province" maxlength="80"></div><div class="field"><label>گذرواژه موقت *</label><input name="password" required type="password" minlength="8" autocomplete="new-password"></div></div><div class="form-actions"><button class="primary" type="submit">ایجاد پرونده</button><button class="secondary" type="button" onclick="closeCreate()">انصراف</button></div></form></div>
-<div class="toast" id="toast"></div>
+
+<datalist id="optProvince"></datalist>
+<datalist id="optEducation"></datalist>
+<datalist id="optEthnicity"></datalist>
+
+<!-- ثبت پرونده جدید -->
+<div class="scrim" id="createScrim" onclick="if(event.target===this)closeCreate()">
+  <form class="modal" id="createForm">
+    <h2>ثبت پرونده هویتی</h2>
+    <p>اطلاعات پایه را وارد کنید تا پرونده در صف بررسی قرار بگیرد.</p>
+    <div class="form-grid">
+      <div class="field"><label>نام *</label><input class="input" name="name" required maxlength="100"></div>
+      <div class="field"><label>نام خانوادگی</label><input class="input" name="family_name" maxlength="100"></div>
+      <div class="field"><label>نام پدر</label><input class="input" name="father_name" maxlength="100"></div>
+      <div class="field"><label>تاریخ تولد</label><input class="input" name="birth_date" placeholder="۱۳۷۰/۰۱/۱۵"></div>
+      <div class="field wide"><label>کد ملی / شناسه</label><input class="input mono-num" name="national_id" maxlength="30"></div>
+      <div class="field wide"><label>شماره همراه *</label><input class="input mono-num" name="mobile_phone" required inputmode="tel" maxlength="15"></div>
+      <div class="field"><label>استان / ولایت</label><input class="input" name="province" list="optProvince" maxlength="80"></div>
+      <div class="field"><label>تحصیلات</label><input class="input" name="education" list="optEducation" maxlength="80"></div>
+      <div class="field wide"><label>قومیت</label><input class="input" name="ethnicity" list="optEthnicity" maxlength="80"></div>
+      <div class="field wide"><label>گذرواژه موقت *</label><input class="input" name="password" required type="password" minlength="8" autocomplete="new-password"></div>
+    </div>
+    <div class="modal-actions">
+      <button type="submit" class="btn btn-primary">ایجاد پرونده</button>
+      <button type="button" class="btn btn-ghost" onclick="closeCreate()">انصراف</button>
+    </div>
+  </form>
+</div>
+
+<!-- مشاهده و بررسی پرونده -->
+<div class="scrim" id="viewScrim" onclick="if(event.target===this)closeView()">
+  <div class="modal modal-wide">
+    <div class="view-head">
+      <div class="person-avatar" id="viewAvatar">—</div>
+      <div style="min-width:0">
+        <div class="view-title" id="viewTitle">—</div>
+        <div class="view-sub" id="viewSub">—</div>
+      </div>
+      <div style="margin-right:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <span class="badge" id="viewVerifyBadge">—</span>
+        <select class="status-select" id="viewStatus" onchange="setViewStatus(this.value)">
+          <option value="فعال">فعال</option><option value="غیرفعال">غیرفعال</option><option value="مسدود">مسدود</option>
+        </select>
+      </div>
+    </div>
+    <div id="viewBody"></div>
+    <div class="view-actions">
+      <button class="btn btn-primary btn-sm" onclick="setVerification('تأیید شده')">تأیید بررسی</button>
+      <button class="btn btn-danger btn-sm" onclick="setVerification('رد شده')">رد بررسی</button>
+      <button class="btn btn-outline btn-sm" onclick="editFromView()">ویرایش پرونده</button>
+      <button class="btn btn-ghost btn-sm" onclick="deleteFromView()">حذف پرونده</button>
+    </div>
+  </div>
+</div>
+
+<!-- ویرایش پرونده -->
+<div class="scrim" id="editScrim" onclick="if(event.target===this)closeEdit()">
+  <form class="modal modal-wide" id="editForm">
+    <h2>ویرایش پرونده</h2>
+    <p>مقدارهای پرونده بارگذاری شده‌اند؛ فقط فیلدهای مورد نظر را تغییر دهید.</p>
+    <div class="form-grid" id="editFields"></div>
+    <div class="modal-actions">
+      <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
+      <button type="button" class="btn btn-ghost" onclick="closeEdit()">انصراف</button>
+    </div>
+  </form>
+</div>
+
+<div class="toast good" id="toast"></div>
+<div class="toast bad" id="toastBad"></div>
+
 <script>
-const API='/api',token=localStorage.getItem('adminToken');let page=1,toastTimer;const fa=new Intl.NumberFormat('fa-IR');
-if(!token)location.replace('admin-login.html');
-const admin=JSON.parse(localStorage.getItem('adminInfo')||'{}');document.getElementById('adminName').textContent=admin.full_name||admin.username||'مدیر سامانه';document.getElementById('avatar').textContent=(admin.full_name||admin.username||'م').trim().slice(0,1);document.getElementById('today').textContent=new Intl.DateTimeFormat('fa-IR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(new Date());
-async function api(path,options={}){const response=await fetch(API+path,{...options,headers:{Authorization:`Bearer ${token}`,...options.headers}});if(response.status===401){logout();throw Error('نشست شما پایان یافته است.');}const data=await response.json();if(!response.ok||!data.success)throw Error(data.message||'ارتباط با سامانه ناموفق بود.');return data}
-function notify(message,bad=false){const el=document.getElementById('toast');el.textContent=message;el.classList.toggle('bad',bad);el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3200)}
+
+const API='/api', token=localStorage.getItem('adminToken');
+let page=1, toastTimer, viewId=null;
+const editData={};
+const fa=new Intl.NumberFormat('fa-IR');
+if(!token) location.replace('admin-login.html');
+
+const P={
+  dash:'<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>',
+  users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>',
+  briefcase:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
+  activity:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
+  shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',
+  file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/>',
+  download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/>',
+  plus:'<path d="M12 5v14"/><path d="M5 12h14"/>',
+  refresh:'<path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/>',
+  check:'<path d="M20 6 9 17l-5-5"/>',
+  checkCircle:'<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>',
+  alert:'<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
+  x:'<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+  pencil:'<path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/>',
+  trash:'<path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+  eye:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="10" r="3"/>',
+  copy:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
+  moon:'<path d="M12 3a6.36 6.36 0 0 0 9 9 9 9 0 1 1-9-9Z"/>'
+};
+const I=n=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]||''}</svg>`;
+function mountIcons(root=document){root.querySelectorAll('[data-i]').forEach(el=>el.insertAdjacentHTML('afterbegin',I(el.dataset.i)))}
+
+const admin=JSON.parse(localStorage.getItem('adminInfo')||'{}');
+document.getElementById('adminName').textContent=admin.full_name||admin.username||'مدیر سامانه';
+document.getElementById('avatar').textContent=(admin.full_name||admin.username||'م').trim().slice(0,1);
+document.getElementById('today').textContent=new Intl.DateTimeFormat('fa-IR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(new Date());
+
+const savedTheme=localStorage.getItem('hooyarTheme');
+if(savedTheme==='dark')document.documentElement.classList.add('theme-dark');
+function themeIcon(){document.getElementById('themeBtn').innerHTML=I(document.documentElement.classList.contains('theme-dark')?'sun':'moon')}
+document.getElementById('themeBtn').addEventListener('click',()=>{
+  const dark=document.documentElement.classList.toggle('theme-dark');
+  localStorage.setItem('hooyarTheme',dark?'dark':'light');themeIcon();
+});
+
+document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',()=>{
+  document.querySelectorAll('.nav a').forEach(x=>x.classList.remove('selected'));a.classList.add('selected');
+}));
+
+async function api(path,options={}){
+  const response=await fetch(API+path,{...options,headers:{Authorization:`Bearer ${token}`,...options.headers}});
+  if(response.status===401){logout();throw Error('نشست شما پایان یافته است.');}
+  const data=await response.json();
+  if(!response.ok||!data.success)throw Error(data.message||'ارتباط با سامانه ناموفق بود.');
+  return data;
+}
+function notify(message,bad=false){
+  const el=document.getElementById(bad?'toastBad':'toast');
+  el.innerHTML=(bad?I('alert'):I('check'))+`<span>${safe(message)}</span>`;
+  el.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3400);
+}
 function logout(){localStorage.removeItem('adminToken');localStorage.removeItem('adminInfo');location.href='admin-login.html'}
 function safe(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-async function loadStats(){try{const{stats:s}=await api('/admin/stats');document.getElementById('statTotal').textContent=fa.format(s.total||0);document.getElementById('statActive').textContent=fa.format(s.active||0);document.getElementById('statPending').textContent=fa.format(s.pending||0);document.getElementById('statVerified').textContent=fa.format(s.verified||0);renderChart(s.monthly||[]);renderQueue(s.recent||[],s.pending||0)}catch(e){notify(e.message,true)}}
-async function loadMfaStatus(){try{const d=await api('/auth/admin/mfa/status'),status=document.getElementById('mfaStatus');status.textContent=d.enabled?'فعال':'غیرفعال';status.classList.toggle('enabled',d.enabled);document.getElementById('mfaStartBtn').style.display=d.enabled?'none':'inline-block';document.getElementById('mfaDisableCode').style.display=d.enabled?'inline-block':'none';document.getElementById('mfaDisableBtn').style.display=d.enabled?'inline-block':'none'}catch(e){notify(e.message,true)}}
-async function startMfaSetup(){const current_password=document.getElementById('mfaCurrentPassword').value;if(!current_password)return notify('گذرواژه‌ی فعلی را وارد کنید',true);try{const d=await api('/auth/admin/mfa/setup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({current_password})});document.getElementById('mfaSecret').textContent=d.secret;document.getElementById('mfaSetupBox').style.display='block';document.getElementById('mfaCurrentPassword').value='';document.getElementById('mfaEnableCode').focus()}catch(e){notify(e.message,true)}}
-async function copyMfaSecret(){try{await navigator.clipboard.writeText(document.getElementById('mfaSecret').textContent);notify('کلید کپی شد')}catch{notify('کلید را با انتخاب متن کپی کنید',true)}}
-async function enableMfa(){const code=document.getElementById('mfaEnableCode').value;try{await api('/auth/admin/mfa/enable',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code})});document.getElementById('mfaSetupBox').style.display='none';document.getElementById('mfaEnableCode').value='';notify('ورود دومرحله‌ای فعال شد');loadMfaStatus()}catch(e){notify(e.message,true)}}
-async function disableMfa(){const current_password=document.getElementById('mfaCurrentPassword').value,code=document.getElementById('mfaDisableCode').value;if(!current_password)return notify('گذرواژه‌ی فعلی را وارد کنید',true);try{await api('/auth/admin/mfa/disable',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({current_password,code})});document.getElementById('mfaCurrentPassword').value='';document.getElementById('mfaDisableCode').value='';notify('ورود دومرحله‌ای غیرفعال شد');loadMfaStatus()}catch(e){notify(e.message,true)}}
-function renderChart(rows){const chart=document.getElementById('chart');if(!rows.length){chart.innerHTML='<div class="empty">هنوز داده‌ای برای نمایش وجود ندارد</div>';return}const list=rows.slice(-8),max=Math.max(1,...list.map(x=>Number(x.count)||0));chart.innerHTML=list.map(x=>{const parts=String(x.month||'').split('-');const label=parts.length>1?parts[1]:x.month;const val=Number(x.count)||0;return `<div class="bar-group"><span class="bar-value">${fa.format(val)}</span><div class="bar-wrap"><div class="bar" style="height:${Math.max(3,val/max*100)}%"></div></div><span class="bar-label">${safe(label)}</span></div>`}).join('')}
-function renderQueue(rows,pending){const box=document.getElementById('queue'),list=rows.filter(x=>x.verification==='در انتظار بررسی').slice(0,4);document.getElementById('queueCount').textContent=`${fa.format(pending)} پرونده`;if(!list.length){box.innerHTML='<div class="empty">پرونده‌ای در صف بررسی نیست</div>';return}box.innerHTML=list.map(r=>`<div class="queue-row"><div class="queue-icon">◷</div><div><div class="queue-name">${safe((r.name||'')+' '+(r.family_name||''))}</div><div class="queue-meta">${safe(r.registration_no||'—')} · ${safe(r.created_at||'')}</div></div><button onclick="reviewRecord(${Number(r.id)})">بررسی</button></div>`).join('')}
-async function reviewRecord(id){try{const d=await api(`/admin/customers/${id}`);const c=d.customer;const yes=confirm(`پرونده ${c.name||''} ${c.family_name||''}\nشناسه: ${c.registration_no||'—'}\n\nآیا بررسی داخلی این پرونده را تأیید می‌کنید؟`);if(!yes)return;await api(`/admin/customers/${id}/status`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({verification:'تأیید شده'})});notify('وضعیت بررسی پرونده به‌روزرسانی شد');refreshAll()}catch(e){notify(e.message,true)}}
-async function loadRecords(n=1){page=n;const body=document.getElementById('recordsBody');body.innerHTML='<tr><td colspan="7" class="empty">در حال بارگذاری…</td></tr>';const qs=new URLSearchParams({page:n,limit:10,search:document.getElementById('searchInput').value,status:document.getElementById('statusFilter').value});try{const d=await api('/admin/customers?'+qs);if(!d.customers.length){body.innerHTML='<tr><td colspan="7" class="empty">پرونده‌ای پیدا نشد</td></tr>'}else body.innerHTML=d.customers.map(c=>{const verify=c.verification==='تأیید شده'?'ok':c.verification==='رد شده'?'off':'wait',status=c.status==='فعال'?'ok':c.status==='مسدود'?'off':'wait';return `<tr><td><div class="person"><div class="person-avatar">${safe((c.name||'؟').slice(0,1))}</div><div><b>${safe((c.name||'')+' '+(c.family_name||''))}</b><small>${safe(c.national_id||'شناسه ثبت نشده')}</small></div></div></td><td>${safe(c.registration_no||'—')}</td><td>${safe(c.mobile_phone||'—')}</td><td>${safe(c.province||'—')}</td><td><span class="badge ${status}">${safe(c.status||'نامشخص')}</span></td><td><span class="badge ${verify}">${safe(c.verification||'در انتظار بررسی')}</span></td><td><button class="row-action" onclick="reviewRecord(${Number(c.id)})">مشاهده و بررسی</button></td></tr>`}).join('');const p=d.pagination;document.getElementById('tableSummary').textContent=`نمایش ${fa.format(d.customers.length)} از ${fa.format(p.total)} پرونده`;const pages=document.getElementById('pages');let html='';if(p.page>1)html+=`<button onclick="loadRecords(${p.page-1})">بعدی</button>`;for(let i=Math.max(1,p.page-2);i<=Math.min(p.totalPages,p.page+2);i++)html+=`<button class="${i===p.page?'active':''}" onclick="loadRecords(${i})">${fa.format(i)}</button>`;if(p.page<p.totalPages)html+=`<button onclick="loadRecords(${p.page+1})">قبلی</button>`;pages.innerHTML=html}catch(e){body.innerHTML=`<tr><td colspan="7" class="empty">${safe(e.message)}</td></tr>`}}
-function openCreate(){document.getElementById('createForm').reset();document.getElementById('createScrim').classList.add('open')};function closeCreate(){document.getElementById('createScrim').classList.remove('open')}
-document.getElementById('createForm').addEventListener('submit',async e=>{e.preventDefault();const data=Object.fromEntries(new FormData(e.currentTarget));try{await api('/admin/customers',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});closeCreate();notify('پرونده با موفقیت ایجاد شد');refreshAll()}catch(err){notify(err.message,true)}});
-function refreshAll(){loadStats();loadRecords(page);loadMfaStatus()}loadStats();loadRecords();loadMfaStatus();
+
+async function loadStats(){
+  try{
+    const{stats:s}=await api('/admin/stats');
+    document.getElementById('statTotal').textContent=fa.format(s.total||0);
+    document.getElementById('statActive').textContent=fa.format(s.active||0);
+    document.getElementById('statPending').textContent=fa.format(s.pending||0);
+    document.getElementById('statVerified').textContent=fa.format(s.verified||0);
+    renderChart(s.monthly||[]);
+    renderQueue(s.recent||[],s.pending||0);
+    renderHbars('demoProvince',s.by_province||[]);
+    renderHbars('demoEducation',s.by_education||[]);
+    renderHbars('demoEthnicity',s.by_ethnicity||[]);
+  }catch(e){notify(e.message,true)}
+}
+async function loadMfaStatus(){
+  try{
+    const d=await api('/auth/admin/mfa/status');
+    const status=document.getElementById('mfaStatus');
+    status.textContent=d.enabled?'فعال':'غیرفعال';
+    status.className='mfa-status '+(d.enabled?'on':'');
+    document.getElementById('mfaStartBtn').style.display=d.enabled?'none':'inline-flex';
+    document.getElementById('mfaDisableCode').style.display=d.enabled?'block':'none';
+    document.getElementById('mfaDisableBtn').style.display=d.enabled?'inline-flex':'none';
+    if(!d.enabled)document.getElementById('mfaSetupBox').style.display='none';
+  }catch(e){notify(e.message,true)}
+}
+async function startMfaSetup(){
+  const current_password=document.getElementById('mfaCurrentPassword').value;
+  if(!current_password)return notify('گذرواژه‌ی فعلی را وارد کنید',true);
+  try{
+    const d=await api('/auth/admin/mfa/setup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({current_password})});
+    document.getElementById('mfaSecret').textContent=d.secret;
+    document.getElementById('mfaSetupBox').style.display='block';
+    document.getElementById('mfaCurrentPassword').value='';
+    document.getElementById('mfaEnableCode').focus();
+  }catch(e){notify(e.message,true)}
+}
+async function copyMfaSecret(){
+  try{await navigator.clipboard.writeText(document.getElementById('mfaSecret').textContent);notify('کلید کپی شد')}catch{notify('کلید را با انتخاب متن کپی کنید',true)}
+}
+async function enableMfa(){
+  const code=document.getElementById('mfaEnableCode').value;
+  try{
+    await api('/auth/admin/mfa/enable',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code})});
+    document.getElementById('mfaSetupBox').style.display='none';document.getElementById('mfaEnableCode').value='';notify('ورود دومرحله‌ای فعال شد');loadMfaStatus();
+  }catch(e){notify(e.message,true)}
+}
+async function disableMfa(){
+  const current_password=document.getElementById('mfaCurrentPassword').value,code=document.getElementById('mfaDisableCode').value;
+  if(!current_password)return notify('گذرواژه‌ی فعلی را وارد کنید',true);
+  try{
+    await api('/auth/admin/mfa/disable',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({current_password,code})});
+    document.getElementById('mfaCurrentPassword').value='';document.getElementById('mfaDisableCode').value='';notify('ورود دومرحله‌ای غیرفعال شد');loadMfaStatus();
+  }catch(e){notify(e.message,true)}
+}
+function renderChart(rows){
+  const chart=document.getElementById('chart');
+  if(!rows.length){chart.innerHTML='<div class="empty"><small>هنوز داده‌ای برای نمایش وجود ندارد</small></div>';return}
+  const list=rows.slice(-8),max=Math.max(1,...list.map(x=>Number(x.count)||0));
+  chart.innerHTML=list.map(x=>{
+    const parts=String(x.month||'').split('-');
+    const label=parts.length>1?parts[1]:x.month;
+    const val=Number(x.count)||0;
+    return `<div class="bar-group"><span class="bar-value">${fa.format(val)}</span><div class="bar-wrap"><div class="bar" style="height:${Math.max(3,val/max*100)}%"></div></div><span class="bar-label">${safe(label)}</span></div>`;
+  }).join('');
+}
+function renderHbars(elId,rows){
+  const el=document.getElementById(elId);
+  if(!rows.length){el.innerHTML='<div class="empty"><small>داده‌ای ثبت نشده است</small></div>';return}
+  const max=Math.max(1,...rows.map(r=>Number(r.count)||0));
+  el.innerHTML=rows.slice(0,6).map(r=>{
+    const name=r.province||r.education||r.ethnicity||'—';
+    const val=Number(r.count)||0;
+    return `<div class="hbar"><span class="name">${safe(name)}</span><span class="track"><span class="fill" style="width:${Math.max(4,val/max*100)}%"></span></span><span class="val">${fa.format(val)}</span></div>`;
+  }).join('');
+}
+function renderQueue(rows,pending){
+  const box=document.getElementById('queue');
+  const list=rows.filter(x=>x.verification==='در انتظار بررسی').slice(0,4);
+  document.getElementById('queueCount').textContent=`${fa.format(pending)} پرونده`;
+  if(!list.length){box.innerHTML='<div class="empty"><small>پرونده‌ای در صف بررسی نیست</small></div>';return}
+  box.innerHTML=list.map(r=>`<div class="queue-row"><div class="queue-ico">${I('clock')}</div><div><div class="queue-name">${safe((r.name||'')+' '+(r.family_name||''))}</div><div class="queue-meta">${safe(r.registration_no||'—')} · ${safe(r.created_at||'')}</div></div><button class="btn btn-outline btn-sm" onclick="reviewRecord(${Number(r.id)})">بررسی</button></div>`).join('');
+}
+function svcStatusClass(s){return s==='انجام شده'?'ok':s==='رد شده'?'off':s==='در حال انجام'?'info':'wait'}
+
+async function loadRecords(n=1){
+  page=n;
+  const body=document.getElementById('recordsBody');
+  body.innerHTML='<tr><td colspan="7" class="empty">در حال بارگذاری…</td></tr>';
+  const qs=new URLSearchParams({page:n,limit:10,search:document.getElementById('searchInput').value,status:document.getElementById('statusFilter').value,verification:document.getElementById('verificationFilter').value,sort:document.getElementById('sortFilter').value});
+  try{
+    const d=await api('/admin/customers?'+qs);
+    if(!d.customers.length){body.innerHTML='<tr><td colspan="7" class="empty"><small>پرونده‌ای با این فیلترها پیدا نشد</small></td></tr>'}
+    else body.innerHTML=d.customers.map(c=>{
+      const verify=c.verification==='تأیید شده'?'ok':c.verification==='رد شده'?'off':'wait';
+      const status=c.status==='فعال'?'ok':c.status==='مسدود'?'off':'wait';
+      return `<tr><td><div class="person"><div class="person-avatar">${safe((c.name||'؟').slice(0,1))}</div><div><b>${safe((c.name||'')+' '+(c.family_name||''))}</b><small>${safe(c.national_id||'شناسه ثبت نشده')}</small></div></div></td><td class="mono-num">${safe(c.registration_no||'—')}</td><td class="mono-num">${safe(c.mobile_phone||'—')}</td><td>${safe(c.province||'—')}</td><td><span class="badge ${status}">${safe(c.status||'نامشخص')}</span></td><td><span class="badge ${verify}">${safe(c.verification||'در انتظار بررسی')}</span></td><td><button class="row-action" onclick="reviewRecord(${Number(c.id)})">${I('eye')}مدیریت</button></td></tr>`;
+    }).join('');
+    const p=d.pagination;
+    document.getElementById('tableSummary').textContent=`نمایش ${fa.format(d.customers.length)} از ${fa.format(p.total)} پرونده`;
+    const pages=document.getElementById('pages');let html='';
+    if(p.page>1)html+=`<button onclick="loadRecords(${p.page-1})">قبلی</button>`;
+    for(let i=Math.max(1,p.page-2);i<=Math.min(p.totalPages,p.page+2);i++)html+=`<button class="${i===p.page?'active':''}" onclick="loadRecords(${i})">${fa.format(i)}</button>`;
+    if(p.page<p.totalPages)html+=`<button onclick="loadRecords(${p.page+1})">بعدی</button>`;
+    pages.innerHTML=html;
+  }catch(e){body.innerHTML=`<tr><td colspan="7" class="empty"><small>${safe(e.message)}</small></td></tr>`}
+}
+
+function kvRows(rows){
+  return `<div class="kv">`+rows.map(([k,v])=>`<div><div class="k">${k}</div><div class="v${v?'':' missing'}">${v?safe(v):'—'}</div></div>`).join('')+`</div>`;
+}
+async function reviewRecord(id){
+  try{
+    const d=await api(`/admin/customers/${id}`);
+    const c=d.customer,services=d.services||[],logs=d.logs||[];
+    viewId=id;
+    document.getElementById('viewAvatar').textContent=(c.name||'؟').slice(0,1);
+    document.getElementById('viewTitle').textContent=[c.name,c.family_name].filter(Boolean).join(' ')||'—';
+    document.getElementById('viewSub').textContent=`${c.registration_no||'—'} · ثبت: ${c.created_at||'—'}`;
+    const vb=document.getElementById('viewVerifyBadge');
+    vb.className='badge '+(c.verification==='تأیید شده'?'ok':c.verification==='رد شده'?'off':'wait');
+    vb.textContent=c.verification||'در انتظار بررسی';
+    document.getElementById('viewStatus').value=c.status||'فعال';
+    let html=kvRows([['نام',c.name],['نام خانوادگی',c.family_name],['نام پدر',c.father_name],['کد ملی',c.national_id],['تاریخ تولد',c.birth_date],['جنسیت',c.gender],['گروه خون',c.blood_type]]);
+    html+=kvRows([['تحصیلات',c.education],['زبان',c.language],['قومیت',c.ethnicity],['وضعیت تأهل',c.marital_status],['تعداد فرزندان',c.children_count],['شغل',c.job]]);
+    html+=kvRows([['استان',c.province],['ولسوالی',c.district],['ولایت',c.state],['محل خدمت',c.service_location],['نشانی',c.address],['موبایل',c.mobile_phone],['موبایل دوم',c.phone_secondary]]);
+    html+=kvRows([['نوع مدرک',c.document_type],['شماره مدرک',c.document_number],['یادداشت داخلی',c.notes]]);
+    html+=services.length?`<div class="kv-title">درخواست‌های خدمت</div><div class="mini-list">`+services.map(x=>`<div class="mini-row"><div class="av">${I('briefcase')}</div><div class="who"><b>${safe(x.title||'—')}</b><small>${safe(x.created_at||'')}</small></div><span class="badge ${svcStatusClass(x.status)}">${safe(x.status||'—')}</span></div>`).join('')+`</div>`:'';
+    html+=logs.length?`<div class="kv-title">آخرین فعالیت‌های پرونده</div><div class="mini-list">`+logs.map(x=>`<div class="mini-row"><div class="av">${I('activity')}</div><div class="who"><b>${safe(x.action||'—')}</b><small>${safe(x.actor_name||'')} · ${safe(x.created_at||'')}</small></div></div>`).join('')+`</div>`:'';
+    document.getElementById('viewBody').innerHTML=html;
+    document.getElementById('viewScrim').classList.add('open');
+  }catch(e){notify(e.message,true)}
+}
+function closeView(){document.getElementById('viewScrim').classList.remove('open');viewId=null}
+async function setVerification(value){
+  if(!viewId)return;
+  try{
+    await api(`/admin/customers/${viewId}/status`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({verification:value})});
+    notify(value==='تأیید شده'?'پرونده تأیید شد':'پرونده رد شد');
+    reviewRecord(viewId);refreshAll();
+  }catch(e){notify(e.message,true)}
+}
+async function setViewStatus(value){
+  if(!viewId)return;
+  try{
+    await api(`/admin/customers/${viewId}/status`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status:value})});
+    notify('وضعیت حساب به‌روزرسانی شد');
+    reviewRecord(viewId);refreshAll();
+  }catch(e){notify(e.message,true)}
+}
+function editFromView(){if(viewId){const id=viewId;closeView();openEdit(id)}}
+async function deleteFromView(){
+  if(!viewId)return;
+  if(!confirm('این پرونده به‌طور کامل حذف می‌شود. مطمئن هستید؟'))return;
+  try{
+    await api(`/admin/customers/${viewId}`,{method:'DELETE'});
+    closeView();notify('پرونده حذف شد');refreshAll();
+  }catch(e){notify(e.message,true)}
+}
+
+const EDIT_FIELDS=[
+  ['هویت پایه',[
+    ['name','نام'],['family_name','نام خانوادگی'],['father_name','نام پدر'],['grandfather_name','نام پدربزرگ'],
+    ['national_id','کد ملی'],['birth_date','تاریخ تولد'],
+    ['gender','جنسیت',['','مرد','زن']],
+    ['blood_type','گروه خون',['','A+','A-','B+','B-','AB+','AB-','O+','O-']],
+    ['row_number','شماره ردیف']
+  ]],
+  ['تحصیل و اجتماعی',[
+    ['education','تحصیلات','list:optEducation'],['language','زبان'],['ethnicity','قومیت','list:optEthnicity'],
+    ['religion','دین'],['marital_status','وضعیت تأهل',['','مجرد','متأهل']],
+    ['children_count','تعداد فرزندان'],['job','شغل'],['activity_history','سابقه فعّالیت','textarea']
+  ]],
+  ['نشانی و تماس',[
+    ['mobile_phone','موبایل'],['phone_secondary','موبایل دوم'],['province','استان','list:optProvince'],
+    ['district','ولسوالی / ناحیه'],['state','ولایت'],['service_location','محل خدمت'],['address','نشانی','textarea']
+  ]],
+  ['مدرک و عملیات',[
+    ['document_type','نوع مدرک'],['document_number','شماره مدرک'],
+    ['status','وضعیت حساب',['','فعال','غیرفعال','مسدود']],
+    ['verification','وضعیت بررسی',['','در انتظار بررسی','تأیید شده','رد شده']],
+    ['notes','یادداشت داخلی','textarea']
+  ]]
+];
+function buildEditForm(){
+  const host=document.getElementById('editFields');
+  host.innerHTML='';
+  EDIT_FIELDS.forEach(([group,fields])=>{
+    host.insertAdjacentHTML('beforeend',`<div class="kv-title" style="grid-column:1/-1">${group}</div>`);
+    fields.forEach(([key,label,type])=>{
+      const wide=['activity_history','address','notes'].includes(key)?' wide':'';
+      if(Array.isArray(type)){
+        const opts=type.map(o=>`<option value="${safe(o)}">${safe(o)||'—'}</option>`).join('');
+        host.insertAdjacentHTML('beforeend',`<div class="field${wide}"><label>${label}</label><select class="input" name="${key}">${opts}</select></div>`);
+      }else if(type==='textarea'){
+        host.insertAdjacentHTML('beforeend',`<div class="field${wide}"><label>${label}</label><textarea class="input" name="${key}" rows="2"></textarea></div>`);
+      }else{
+        const attr=type==='list:optProvince'?' list="optProvince"':type==='list:optEducation'?' list="optEducation"':type==='list:optEthnicity'?' list="optEthnicity"':'';
+        host.insertAdjacentHTML('beforeend',`<div class="field${wide}"><label>${label}</label><input class="input" name="${key}"${attr}></div>`);
+      }
+    });
+  });
+}
+async function openEdit(id){
+  try{
+    const d=await api(`/admin/customers/${id}`);
+    Object.assign(editData,d.customer);
+    delete editData.password;
+    const form=document.getElementById('editForm');
+    form.querySelectorAll('[name]').forEach(el=>{el.value=editData[el.name]??''});
+    document.getElementById('editScrim').classList.add('open');
+  }catch(e){notify(e.message,true)}
+}
+function closeEdit(){document.getElementById('editScrim').classList.remove('open')}
+document.getElementById('editForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const form=Object.fromEntries(new FormData(e.currentTarget));
+  Object.keys(form).forEach(k=>{if(form[k]==='')delete form[k]});
+  const payload={...editData,...form};
+  delete payload.password;
+  try{
+    await api(`/admin/customers/${editData.id}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    closeEdit();notify('پرونده به‌روزرسانی شد');refreshAll();
+  }catch(err){notify(err.message,true)}
+});
+
+function openCreate(){document.getElementById('createForm').reset();document.getElementById('createScrim').classList.add('open')};
+function closeCreate(){document.getElementById('createScrim').classList.remove('open')}
+document.getElementById('createForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const data=Object.fromEntries(new FormData(e.currentTarget));
+  try{
+    await api('/admin/customers',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    closeCreate();notify('پرونده با موفقیت ایجاد شد');refreshAll();
+  }catch(err){notify(err.message,true)}
+});
+
+async function loadServices(){
+  try{
+    const d=await api('/admin/services');
+    const rows=d.services||[];
+    document.getElementById('servicesCount').textContent=fa.format(rows.length)+' درخواست';
+    document.getElementById('servicesBody').innerHTML=rows.length?rows.map(s=>`<tr>
+      <td><div class="person"><div class="person-avatar">${safe((s.name||'؟').slice(0,1))}</div><div><b>${safe((s.name||'')+' '+(s.family_name||''))}</b><small>${safe(s.registration_no||'—')}</small></div></div></td>
+      <td style="white-space:normal">${safe(s.title||'—')}</td>
+      <td style="white-space:normal;color:var(--faint)">${safe((s.description||'—').slice(0,60))}</td>
+      <td><select class="status-select" onchange="setServiceStatus(${Number(s.id)},this.value)">${['در حال بررسی','در حال انجام','انجام شده','رد شده'].map(v=>`<option ${v===s.status?'selected':''}>${v}</option>`).join('')}</select></td>
+      <td class="mono-num">${safe(s.created_at||'—')}</td>
+    </tr>`).join(''):'<tr><td colspan="5" class="empty"><small>درخواستی ثبت نشده است</small></td></tr>';
+  }catch(e){notify(e.message,true)}
+}
+function setServiceStatus(id,status){
+  api('/admin/services/'+id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})})
+    .then(()=>{notify('وضعیت درخواست به‌روزرسانی شد');loadServices()})
+    .catch(e=>notify(e.message,true));
+}
+
+async function loadLogs(){
+  try{
+    const d=await api('/admin/logs?limit=80');
+    const rows=d.logs||[];
+    document.getElementById('logsBody').innerHTML=rows.length?rows.map(l=>`<tr>
+      <td class="mono-num" style="white-space:nowrap">${safe(l.created_at||'—')}</td>
+      <td><span class="log-actor"><span class="tag${l.actor_type==='customer'?' cust':''}">${l.actor_type==='customer'?'مشتری':'مدیر'}</span>${safe(l.actor_name||'—')}</span></td>
+      <td>${safe(l.action||'—')}</td>
+      <td>${l.target_id?('#'+Number(l.target_id)+' '):''}${safe(l.target_name||'')}</td>
+      <td style="white-space:normal;color:var(--faint)">${safe(l.detail||'—')}</td>
+    </tr>`).join(''):'<tr><td colspan="5" class="empty"><small>فعالیتی ثبت نشده است</small></td></tr>';
+  }catch(e){notify(e.message,true)}
+}
+
+async function loadMeta(){
+  try{
+    const d=await api('/admin/meta');
+    const fill=(id,arr)=>{document.getElementById(id).innerHTML=(arr||[]).map(v=>`<option value="${safe(v)}">`).join('')};
+    fill('optProvince',d.meta.provinces);fill('optEducation',d.meta.educations);fill('optEthnicity',d.meta.ethnicities);
+  }catch(e){}
+}
+
+async function exportCsv(){
+  try{
+    const qs=new URLSearchParams({search:document.getElementById('searchInput').value,status:document.getElementById('statusFilter').value,verification:document.getElementById('verificationFilter').value});
+    const r=await fetch(API+'/admin/customers/export?'+qs,{headers:{Authorization:`Bearer ${token}`}});
+    if(r.status===401){logout();return}
+    if(!r.ok)throw new Error('خطا در تولید خروجی');
+    const blob=await r.blob();
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download='hooyar-customers.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+    notify('خروجی پرونده‌ها آماده دانلود است');
+  }catch(e){notify(e.message,true)}
+}
+
+function refreshAll(){loadStats();loadRecords(page);loadMfaStatus();loadServices();loadLogs();}
+buildEditForm();mountIcons();themeIcon();
+loadStats();loadRecords();loadMfaStatus();loadServices();loadLogs();loadMeta();
 </script>
 </body>
 </html>

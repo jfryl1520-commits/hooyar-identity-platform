@@ -83,7 +83,6 @@ CREATE TABLE IF NOT EXISTS services (
 
 CREATE INDEX IF NOT EXISTS idx_mobile ON customers(mobile_phone);
 CREATE INDEX IF NOT EXISTS idx_status ON customers(status);
-CREATE INDEX IF NOT EXISTS idx_national ON customers(national_id);
 CREATE INDEX IF NOT EXISTS idx_logs_created ON audit_logs(created_at);
 CREATE INDEX IF NOT EXISTS idx_services_customer ON services(customer_id);
 `);
@@ -103,10 +102,17 @@ function addColumnIfMissing(table, column, definition) {
     addColumnIfMissing('customers', column, rest.join(' '));
 });
 
-addColumnIfMissing('admins', 'mfa_secret TEXT');
-addColumnIfMissing('admins', 'mfa_enabled INTEGER NOT NULL DEFAULT 0');
-addColumnIfMissing('admins', 'mfa_last_step INTEGER NOT NULL DEFAULT 0');
-addColumnIfMissing('admins', 'mfa_setup_expires_at TEXT');
+try {
+    db.exec('CREATE INDEX IF NOT EXISTS idx_national ON customers(national_id)');
+} catch (e) {
+    console.warn('Skipping idx_national:', e.message);
+}
+
+['mfa_secret TEXT', 'mfa_enabled INTEGER NOT NULL DEFAULT 0',
+ 'mfa_last_step INTEGER NOT NULL DEFAULT 0', 'mfa_setup_expires_at TEXT'].forEach(def => {
+    const [column, ...rest] = def.split(' ');
+    addColumnIfMissing('admins', column, rest.join(' '));
+});
 
 const bootstrapUsername = process.env.ADMIN_USERNAME;
 const bootstrapPassword = process.env.ADMIN_PASSWORD;

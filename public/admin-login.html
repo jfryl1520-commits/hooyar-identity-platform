@@ -1,192 +1,119 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ورود مدیر | هویار</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Vazir', 'Tahoma', sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .login-container {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            width: 400px;
-            max-width: 90%;
-        }
-
-        h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 28px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-            font-weight: bold;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        button {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        .error {
-            background: #fee;
-            color: #c33;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
-            display: none;
-        }
-
-        .success {
-            background: #efe;
-            color: #3c3;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
-            display: none;
-        }
-    </style>
-    <style>
-        body{background:radial-gradient(ellipse at 70% 12%,#1d3b49,transparent 45%),#0c1422!important}
-        .login-container{background:#142135!important;color:#edf3fb;border:1px solid #2a3b52;border-radius:18px!important;box-shadow:0 30px 90px #0007!important}
-        h2{color:#edf3fb!important;font-size:22px!important}label{color:#aab9cd!important}
-        input{background:#0e1928!important;color:#edf3fb!important;border:1px solid #2b3b52!important;border-radius:9px!important}
-        input:focus{border-color:#67e1c1!important}button{background:linear-gradient(135deg,#67e1c1,#45b7a7)!important;color:#0b2823!important;border-radius:9px!important}
-        .error{background:#37232b!important;color:#ffc0c6!important}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ورود کارشناسان | هویار</title>
+<link rel="stylesheet" href="/styles/design-system.css">
 </head>
 <body>
-    <div class="login-container">
-        <h2>🔐 ورود به هویار</h2>
-        <div class="error" id="errorMsg"></div>
-        <div class="success" id="successMsg"></div>
-        <form id="loginForm">
-            <div class="form-group">
-                <label>نام کاربری</label>
-                <input type="text" id="username" required>
-            </div>
-            <div class="form-group">
-                <label>رمز عبور</label>
-                <input type="password" id="password" required>
-            </div>
-            <div class="form-group" id="mfaGroup" style="display:none">
-                <label>کد یک‌بارمصرف برنامه‌ی احراز هویت</label>
-                <input type="text" id="mfaCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" placeholder="۱۲۳۴۵۶">
-            </div>
-            <button type="submit">ورود به پنل</button>
-        </form>
+<div class="auth">
+  <aside class="auth-aside">
+    <div class="brand"><div class="brand-mark">ه</div><div><strong>هویار</strong><small>سامانه مدیریت هویت</small></div></div>
+    <div class="auth-hero">
+      <h1>کنسول عملیات هویت</h1>
+      <p>دسترسی کارشناسان و مدیران به پرونده‌ها، صف بررسی، درخواست‌های خدمات و گزارش فعالیت.</p>
+      <ul class="auth-points">
+        <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>مدیریت کامل پرونده‌های هویتی</li>
+        <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>بررسی کارشناسی و ثبت نتیجه</li>
+        <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>ورود دومرحله‌ای با کد یک‌بارمصرف</li>
+        <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>گزارش کامل رویدادهای سامانه</li>
+      </ul>
     </div>
+    <div class="auth-note"><b>نسخه‌ی نمایشی.</b> تأیید هویت رسمی به اتصال سرویس مرجع نیاز دارد. داده‌های نمایشی را با داده‌های واقعی جایگزین نکنید.</div>
+  </aside>
 
-    <script>
-        const API_URL = '/api';
-        let mfaChallenge = null;
+  <main class="auth-panel">
+    <div class="auth-card">
+      <div class="auth-top">
+        <a href="index.html" class="btn btn-ghost btn-sm" style="gap:5px">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          بازگشت
+        </a>
+      </div>
+      <h2 id="formTitle">ورود کارشناسان</h2>
+      <p class="sub" id="formSub">نام کاربری و رمز عبور خود را وارد کنید.</p>
 
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+      <div class="toast good" id="successMsg" role="status" style="position:static;margin-bottom:14px;opacity:1;transform:none;display:none"></div>
+      <div class="toast bad" id="errorMsg" role="alert" style="position:static;margin-bottom:14px;opacity:1;transform:none;display:none"></div>
 
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const errorMsg = document.getElementById('errorMsg');
-            const successMsg = document.getElementById('successMsg');
+      <form id="loginForm">
+        <div class="field">
+          <label for="username">نام کاربری</label>
+          <input class="input" type="text" id="username" required autocomplete="username">
+        </div>
+        <div class="field">
+          <label for="password">رمز عبور</label>
+          <input class="input" type="password" id="password" required autocomplete="current-password">
+        </div>
+        <div class="field" id="mfaGroup" style="display:none">
+          <label for="mfaCode">کد یک‌بارمصرف برنامه‌ی احراز هویت</label>
+          <input class="input mono-num" type="text" id="mfaCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" placeholder="۱۲۳۴۵۶">
+        </div>
+        <button type="submit" class="btn btn-primary" id="submitBtn">ورود به کنسول</button>
+      </form>
 
-            errorMsg.style.display = 'none';
-            successMsg.style.display = 'none';
+      <p class="auth-alt">شهروند هستید؟ <a href="customer-login.html">ورود پنل شهروندی</a></p>
+    </div>
+  </main>
+</div>
 
-            try {
-                const response = await fetch(`${API_URL}/auth/admin/${mfaChallenge ? 'verify-mfa' : 'login'}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(mfaChallenge ? { challenge_token: mfaChallenge, code: document.getElementById('mfaCode').value } : { username, password })
-                });
+<script>
+const API = '/api';
+let mfaChallenge = null;
+const $ = id => document.getElementById(id);
 
-                const data = await response.json();
+function setLoading(loading) {
+  const btn = $('submitBtn');
+  btn.disabled = loading;
+  btn.textContent = loading ? 'در حال ورود…' : 'ورود به کنسول';
+}
+function show(id, text) { const el = $(id); el.textContent = text; el.style.display = 'flex'; }
+function hide(id) { $(id).style.display = 'none'; }
 
-                if (data.success) {
-                    if (data.mfa_required) {
-                        mfaChallenge = data.challenge_token;
-                        document.getElementById('mfaGroup').style.display = 'block';
-                        document.getElementById('mfaCode').required = true;
-                        document.getElementById('mfaCode').focus();
-                        document.querySelector('#loginForm button[type="submit"]').textContent = 'تأیید و ورود';
-                        successMsg.textContent = 'کد برنامه‌ی احراز هویت را وارد کنید.';
-                        successMsg.style.display = 'block';
-                        return;
-                    }
-                    localStorage.setItem('adminToken', data.token);
-                    localStorage.setItem('adminInfo', JSON.stringify(data.admin));
-                    successMsg.textContent = 'ورود موفق! در حال انتقال...';
-                    successMsg.style.display = 'block';
-                    setTimeout(() => {
-                        window.location.href = 'admin-dashboard.html';
-                    }, 1000);
-                } else {
-                    if (response.status === 401 && mfaChallenge) document.getElementById('mfaCode').value = '';
-                    errorMsg.textContent = data.message;
-                    errorMsg.style.display = 'block';
-                }
-            } catch (error) {
-                errorMsg.textContent = 'خطا در اتصال به سرور';
-                errorMsg.style.display = 'block';
-            }
-        });
-    </script>
+$('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  hide('errorMsg'); hide('successMsg');
+
+  const body = mfaChallenge
+    ? { challenge_token: mfaChallenge, code: $('mfaCode').value }
+    : { username: $('username').value, password: $('password').value };
+
+  setLoading(true);
+  try {
+    const response = await fetch(`${API}/auth/admin/${mfaChallenge ? 'verify-mfa' : 'login'}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await response.json();
+
+    if (data.success) {
+      if (data.mfa_required) {
+        mfaChallenge = data.challenge_token;
+        $('mfaGroup').style.display = 'block';
+        $('mfaCode').required = true;
+        $('mfaCode').focus();
+        $('formTitle').textContent = 'تأیید دومرحله‌ای';
+        $('formSub').textContent = 'کد ۶ رقمی برنامه‌ی احراز هویت را وارد کنید.';
+        $('submitBtn').textContent = 'تأیید و ورود';
+        show('successMsg', 'کد برنامه‌ی احراز هویت را وارد کنید.');
+        return;
+      }
+      localStorage.setItem('adminToken', data.token);
+      localStorage.setItem('adminInfo', JSON.stringify(data.admin));
+      show('successMsg', 'ورود موفق! در حال انتقال…');
+      setTimeout(() => { window.location.href = 'admin-dashboard.html'; }, 800);
+    } else {
+      if (response.status === 401 && mfaChallenge) $('mfaCode').value = '';
+      show('errorMsg', data.message);
+    }
+  } catch (err) {
+    show('errorMsg', 'خطا در اتصال به سرور');
+  } finally {
+    setLoading(false);
+  }
+});
+</script>
 </body>
 </html>

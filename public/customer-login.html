@@ -1,164 +1,98 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ورود مشتری</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Vazir', 'Tahoma', sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .login-container {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            width: 400px;
-            max-width: 90%;
-        }
-
-        h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 28px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-            font-weight: bold;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        button {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-        }
-
-        .error {
-            background: #fee;
-            color: #c33;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
-            display: none;
-        }
-
-        .success {
-            background: #efe;
-            color: #3c3;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
-            display: none;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ورود شهروندان | هویار</title>
+<link rel="stylesheet" href="/styles/design-system.css">
 </head>
 <body>
-    <div class="login-container">
-        <h2>👤 ورود مشتری</h2>
-        <div class="error" id="errorMsg"></div>
-        <div class="success" id="successMsg"></div>
-        <form id="loginForm">
-            <div class="form-group">
-                <label>شماره موبایل</label>
-                <input type="text" id="mobile" required placeholder="09123456789">
-            </div>
-            <div class="form-group">
-                <label>رمز عبور</label>
-                <input type="password" id="password" required>
-            </div>
-            <button type="submit">ورود به پنل</button>
-        </form>
+<div class="auth">
+  <aside class="auth-aside">
+    <div class="brand"><div class="brand-mark">ه</div><div><strong>هویار</strong><small>سامانه مدیریت هویت</small></div></div>
+    <div class="auth-hero">
+      <h1>پنل شهروندی هویار</h1>
+      <p>مشاهده‌ی اطلاعات پرونده‌ی هویتی، وضعیت بررسی آن و ثبت و پیگیری درخواست‌های خدمات.</p>
+      <ul class="auth-points">
+        <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>مشاهده‌ی اطلاعات هویتی ثبت‌شده</li>
+        <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>پیگیری وضعیت پرونده و تأیید آن</li>
+        <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>ثبت درخواست خدمت و پیگیری</li>
+        <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>به‌روزرسانی اطلاعات تماس</li>
+      </ul>
     </div>
+    <div class="auth-note"><b>نسخه‌ی نمایشی.</b> این پنل نمونه‌ای از سامانه‌ی مدیریت هویت است و صرفاً برای نمایش قابلیت‌ها به کار می‌رود.</div>
+  </aside>
 
-    <script>
-        const API_URL = '/api';
+  <main class="auth-panel">
+    <div class="auth-card">
+      <div class="auth-top">
+        <a href="index.html" class="btn btn-ghost btn-sm" style="gap:5px">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          بازگشت
+        </a>
+      </div>
+      <h2>ورود شهروندان</h2>
+      <p class="sub">شماره موبایل و رمز عبور خود را وارد کنید.</p>
 
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+      <div class="toast good" id="successMsg" role="status" style="position:static;margin-bottom:14px;opacity:1;transform:none;display:none"></div>
+      <div class="toast bad" id="errorMsg" role="alert" style="position:static;margin-bottom:14px;opacity:1;transform:none;display:none"></div>
 
-            const mobile = document.getElementById('mobile').value;
-            const password = document.getElementById('password').value;
-            const errorMsg = document.getElementById('errorMsg');
-            const successMsg = document.getElementById('successMsg');
+      <form id="loginForm">
+        <div class="field">
+          <label for="mobile">شماره موبایل</label>
+          <input class="input mono-num" type="tel" id="mobile" required autocomplete="tel" placeholder="۰۹۱۲۳۴۵۶۷۸۹" dir="ltr" style="text-align:left">
+        </div>
+        <div class="field">
+          <label for="password">رمز عبور</label>
+          <input class="input" type="password" id="password" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-primary" id="submitBtn">ورود به پنل</button>
+      </form>
 
-            errorMsg.style.display = 'none';
-            successMsg.style.display = 'none';
+      <p class="auth-alt">کارشناس هستید؟ <a href="admin-login.html">ورود کنسول عملیات</a></p>
+    </div>
+  </main>
+</div>
 
-            try {
-                const response = await fetch(`${API_URL}/auth/customer/login`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ mobile, password })
-                });
+<script>
+const API = '/api';
+const $ = id => document.getElementById(id);
 
-                const data = await response.json();
+function setLoading(loading) {
+  const btn = $('submitBtn');
+  btn.disabled = loading;
+  btn.textContent = loading ? 'در حال ورود…' : 'ورود به پنل';
+}
+function show(id, text) { const el = $(id); el.textContent = text; el.style.display = 'flex'; }
+function hide(id) { $(id).style.display = 'none'; }
 
-                if (data.success) {
-                    localStorage.setItem('customerToken', data.token);
-                    localStorage.setItem('customerInfo', JSON.stringify(data.customer));
-                    successMsg.textContent = 'ورود موفق! در حال انتقال...';
-                    successMsg.style.display = 'block';
-                    setTimeout(() => {
-                        window.location.href = 'customer-dashboard.html';
-                    }, 1000);
-                } else {
-                    errorMsg.textContent = data.message;
-                    errorMsg.style.display = 'block';
-                }
-            } catch (error) {
-                errorMsg.textContent = 'خطا در اتصال به سرور';
-                errorMsg.style.display = 'block';
-            }
-        });
-    </script>
+$('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  hide('errorMsg'); hide('successMsg');
+
+  setLoading(true);
+  try {
+    const response = await fetch(`${API}/auth/customer/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mobile: $('mobile').value, password: $('password').value }),
+    });
+    const data = await response.json();
+
+    if (data.success) {
+      localStorage.setItem('customerToken', data.token);
+      localStorage.setItem('customerInfo', JSON.stringify(data.customer));
+      show('successMsg', 'ورود موفق! در حال انتقال…');
+      setTimeout(() => { window.location.href = 'customer-dashboard.html'; }, 800);
+    } else {
+      show('errorMsg', data.message);
+    }
+  } catch (err) {
+    show('errorMsg', 'خطا در اتصال به سرور');
+  } finally {
+    setLoading(false);
+  }
+});
+</script>
 </body>
 </html>

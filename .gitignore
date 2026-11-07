@@ -6,5 +6,6 @@ node_modules/
 .DS_Store
 database.sqlite
 config/database.sqlite
+database.sqlite-*
 import-data.js
 exports/

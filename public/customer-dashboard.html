@@ -1,380 +1,236 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پنل مشتری</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Vazir', 'Tahoma', sans-serif;
-        }
-
-        body {
-            background: #f5f7fa;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .header h1 {
-            font-size: 24px;
-        }
-
-        .header-info {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .logout-btn {
-            background: rgba(255,255,255,0.2);
-            border: 2px solid white;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .logout-btn:hover {
-            background: white;
-            color: #667eea;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-
-        .welcome-card {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .welcome-card h2 {
-            color: #667eea;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .info-card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
-
-        .info-card h3 {
-            color: #667eea;
-            margin-bottom: 20px;
-            font-size: 20px;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 10px;
-        }
-
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .info-row:last-child {
-            border-bottom: none;
-        }
-
-        .info-label {
-            color: #666;
-            font-weight: bold;
-        }
-
-        .info-value {
-            color: #333;
-            text-align: left;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .status-active {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status-inactive {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 50px;
-            font-size: 18px;
-            color: #666;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0e9f8a">
+  <title>پنل مشتری | هویار</title>
+  <link rel="stylesheet" href="/styles/design-system.css">
 </head>
 <body>
-    <div class="header">
-        <h1>📋 پنل کاربری مشتری</h1>
-        <div class="header-info">
-            <span id="customerName"></span>
-            <button class="logout-btn" onclick="logout()">خروج</button>
-        </div>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">ه</div><div><strong>هویار</strong><small>پنل مشتری</small></div></div>
+    <div class="nav-label">منو</div>
+    <nav class="nav">
+      <a class="selected" href="#profile"><span class="ico" data-i="idcard"></span>پرونده من</a>
+      <a href="#services"><span class="ico" data-i="briefcase"></span>درخواست‌ها</a>
+      <a href="#security"><span class="ico" data-i="key"></span>امنیت</a>
+    </nav>
+    <div class="side-bottom">
+      <div class="side-note"><b>راهنمای سریع</b><br>برای تغییر نشانی یا موبایل دوم از بخش «اطلاعات تماس» استفاده کنید. تغییر رمز عبور در بخش امنیت امکان‌پذیر است.</div>
+      <div class="side-user"><div class="avatar" id="avatar">م</div><div><b id="customerNameSide">مدیر سامانه</b><small>مشتری هویار</small></div></div>
+    </div>
+  </aside>
+
+  <main class="main" style="max-width:1280px">
+    <div class="topbar">
+      <div class="crumb">هویار <span>/</span> پنل کاربری <span>/</span> <b>پرونده من</b></div>
+      <div class="toolbar">
+        <span class="today" id="today"></span>
+        <button class="icon-btn" id="themeBtn" title="تغییر پوسته"></button>
+      </div>
     </div>
 
-    <div class="container">
-        <div class="welcome-card">
-            <h2>خوش آمدید</h2>
-            <p>در این پنل می‌توانید تمام اطلاعات و وضعیت خود را مشاهده کنید</p>
+    <div id="loadingMsg" class="card empty">در حال دریافت اطلاعات پرونده…</div>
+
+    <div id="customerInfo" style="display:none">
+      <section class="card id-hero" id="profile" style="margin-bottom:16px">
+        <div class="id-avatar" id="idAvatar">—</div>
+        <div class="id-info">
+          <div class="id-name" id="idName">—</div>
+          <div class="id-sub">پرونده هویتی الکترونیکی · سامانه هویار</div>
+          <div class="id-chips">
+            <span class="badge" id="statusBadge">—</span>
+            <span class="badge" id="verifyBadge">—</span>
+            <span class="chip mono-chip" id="chipRegNo">—</span>
+            <span class="chip" id="chipJoined">—</span>
+          </div>
         </div>
+      </section>
 
-        <div id="loadingMsg" class="loading">در حال بارگذاری اطلاعات...</div>
-
-        <div id="customerInfo" style="display: none;">
-            <div class="info-grid">
-                <div class="info-card">
-                    <h3>اطلاعات شخصی</h3>
-                    <div class="info-row">
-                        <span class="info-label">نام:</span>
-                        <span class="info-value" id="name"></span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">نام خانوادگی:</span>
-                        <span class="info-value" id="family_name"></span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">نام پدر:</span>
-                        <span class="info-value" id="father_name"></span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">تاریخ تولد:</span>
-                        <span class="info-value" id="birth_date"></span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">شماره موبایل:</span>
-                        <span class="info-value" id="mobile_phone"></span>
-                    </div>
-                </div>
-
-                <div class="info-card">
-                    <h3>اطلاعات تحصیلی و فرهنگی</h3>
-                    <div class="info-row">
-                        <span class="info-label">تحصیلات:</span>
-                        <span class="info-value" id="education"></span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">زبان:</span>
-                        <span class="info-value" id="language"></span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">قومیت:</span>
-                        <span class="info-value" id="ethnicity"></span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">وضعیت تاهل:</span>
-                        <span class="info-value" id="marital_status"></span>
-                    </div>
-                </div>
-
-                <div class="info-card">
-                    <h3>اطلاعات مکانی</h3>
-                    <div class="info-row">
-                        <span class="info-label">استان:</span>
-                        <span class="info-value" id="province"></span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">ولایت:</span>
-                        <span class="info-value" id="state"></span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">محل خدمت:</span>
-                        <span class="info-value" id="service_location"></span>
-                    </div>
-                </div>
-
-                <div class="info-card">
-                    <h3>اطلاعات مدارک</h3>
-                    <div class="info-row">
-                        <span class="info-label">نوع مدرک:</span>
-                        <span class="info-value" id="document_type"></span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">شماره مدرک:</span>
-                        <span class="info-value" id="document_number"></span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">وضعیت:</span>
-                        <span class="info-value" id="status"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="info-card" style="margin-top: 20px;" id="activityCard">
-                <h3>سابقه فعالیت</h3>
-                <p id="activity_history" style="line-height: 1.8; color: #555;"></p>
-            </div>
-
-            <div class="info-card" style="margin-top: 20px;" id="notesCard">
-                <h3>یادداشت‌ها</h3>
-                <p id="notes" style="line-height: 1.8; color: #555;"></p>
-            </div>
-
-            <div class="info-card" style="margin-top: 20px;">
-                <h3>درخواست‌های خدمات</h3>
-                <form id="serviceForm" style="display:grid;gap:10px;margin-bottom:18px;">
-                    <input name="title" required maxlength="120" placeholder="عنوان درخواست" style="padding:11px;border:1px solid #ddd;border-radius:7px;font:inherit">
-                    <textarea name="description" maxlength="1000" rows="3" placeholder="توضیحات تکمیلی (اختیاری)" style="padding:11px;border:1px solid #ddd;border-radius:7px;font:inherit;resize:vertical"></textarea>
-                    <button type="submit" class="logout-btn" style="background:#667eea;border:0;justify-self:start">ثبت درخواست</button>
-                    <p id="serviceMessage" role="status" style="color:#555"></p>
-                </form>
-                <div id="serviceList" style="display:grid;gap:10px"></div>
-            </div>
+      <section class="grid-2 even" style="margin-bottom:16px">
+        <article class="card">
+          <div class="section-head"><h2>اطلاعات هویتی</h2><small>ثبت‌شده در سامانه</small></div>
+          <div id="identityBody"></div>
+        </article>
+        <div style="display:grid;gap:14px;align-content:start">
+          <article class="card">
+            <div class="section-head"><h2>اطلاعات تماس</h2><small>قابل ویرایش</small></div>
+            <form id="contactForm">
+              <div class="field" style="margin-bottom:12px"><label>نشانی</label><textarea class="input" name="address" rows="2" maxlength="500" placeholder="نشانی کامل محل سکونت"></textarea></div>
+              <div class="field" style="margin-bottom:14px"><label>موبایل دوم</label><input class="input mono-num" name="phone_secondary" inputmode="tel" maxlength="15" placeholder="۰۷xx xxx xxxx"></div>
+              <button type="submit" class="btn btn-primary btn-sm">ذخیره اطلاعات تماس</button>
+            </form>
+            <p class="form-msg" id="contactMsg"></p>
+          </article>
+          <article class="card" id="security">
+            <div class="section-head"><h2>تغییر رمز عبور</h2><small>حداقل ۶ کاراکتر</small></div>
+            <form id="passwordForm">
+              <div class="field" style="margin-bottom:12px"><label>رمز عبور فعلی</label><input class="input" type="password" name="current_password" autocomplete="current-password" required></div>
+              <div class="field" style="margin-bottom:14px"><label>رمز عبور جدید</label><input class="input" type="password" name="new_password" autocomplete="new-password" minlength="6" required></div>
+              <button type="submit" class="btn btn-outline btn-sm">تغییر رمز عبور</button>
+            </form>
+            <p class="form-msg" id="passwordMsg"></p>
+          </article>
         </div>
+      </section>
+
+      <article class="card sec" id="services">
+        <div class="section-head"><h2>درخواست‌های خدمات</h2><small id="svcCount">ثبت و پیگیری درخواست</small></div>
+        <form id="serviceForm" style="display:grid;gap:10px;margin-bottom:16px">
+          <div class="field"><label>عنوان درخواست *</label><input class="input" name="title" required maxlength="120" placeholder="مثال: درخواست صدور شناسنامه"></div>
+          <div class="field"><label>توضیحات تکمیلی (اختیاری)</label><textarea class="input" name="description" rows="2" maxlength="1000" placeholder="توضیح مختصر درخواست"></textarea></div>
+          <div><button type="submit" class="btn btn-primary btn-sm">ثبت درخواست</button></div>
+        </form>
+        <p class="form-msg" id="serviceMessage"></p>
+        <div class="svc" id="serviceList"></div>
+      </article>
     </div>
+  </main>
+</div>
 
-    <script>
-        const API_URL = '/api';
-        const token = localStorage.getItem('customerToken');
+<div class="toast good" id="toast"></div>
+<div class="toast bad" id="toastBad"></div>
 
-        if (!token) {
-            window.location.href = 'customer-login.html';
-        }
+<script>
 
-        async function loadProfile() {
-            try {
-                const response = await fetch(`${API_URL}/customer/profile`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
+const API_URL='/api';
+const token=localStorage.getItem('customerToken');
+if(!token) window.location.href='customer-login.html';
+const fa=new Intl.NumberFormat('fa-IR');
+let toastTimer;
 
-                const data = await response.json();
+const P={
+  idcard:'<rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="11" r="2.2"/><path d="M12.5 9.5H18"/><path d="M12.5 13H18"/><path d="M5 16.6c.5-1.6 1.6-2.3 3-2.3s2.5.7 3 2.3"/>',
+  briefcase:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
+  key:'<circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/>',
+  check:'<path d="M20 6 9 17l-5-5"/>',
+  alert:'<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
+  moon:'<path d="M12 3a6.36 6.36 0 0 0 9 9 9 9 0 1 1-9-9Z"/>'
+};
+const I=n=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]||''}</svg>`;
+function mountIcons(){document.querySelectorAll('[data-i]').forEach(el=>el.insertAdjacentHTML('afterbegin',I(el.dataset.i)))}
+function safe(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 
-                if (data.success) {
-                    displayProfile(data.customer, data.services || []);
-                } else {
-                    alert('خطا در دریافت اطلاعات');
-                    logout();
-                }
-            } catch (error) {
-                console.error('Error loading profile:', error);
-                alert('خطا در اتصال به سرور');
-            }
-        }
+async function api(path,options={}){
+  const response=await fetch(API_URL+path,{...options,headers:{Authorization:`Bearer ${token}`,...options.headers}});
+  if(response.status===401){logout();throw new Error('نشست شما پایان یافته است.');}
+  const data=await response.json();
+  if(!response.ok||!data.success)throw new Error(data.message||'ارتباط با سامانه ناموفق بود.');
+  return data;
+}
+function notify(message,bad=false){
+  const el=document.getElementById(bad?'toastBad':'toast');
+  el.innerHTML=(bad?I('alert'):I('check'))+`<span>${safe(message)}</span>`;
+  el.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3400);
+}
+function logout(){localStorage.removeItem('customerToken');localStorage.removeItem('customerInfo');window.location.href='customer-login.html'}
+function statusColor(s){
+  if(s==='انجام شده') return 'ok';
+  if(s==='رد شده') return 'off';
+  if(s==='در حال انجام') return 'info';
+  return 'wait';
+}
 
-        function displayProfile(customer, services) {
-            document.getElementById('loadingMsg').style.display = 'none';
-            document.getElementById('customerInfo').style.display = 'block';
+document.getElementById('today').textContent=new Intl.DateTimeFormat('fa-IR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(new Date());
+const savedTheme=localStorage.getItem('hooyarTheme');
+if(savedTheme==='dark')document.documentElement.classList.add('theme-dark');
+function themeIcon(){document.getElementById('themeBtn').innerHTML=I(document.documentElement.classList.contains('theme-dark')?'sun':'moon')}
+document.getElementById('themeBtn').addEventListener('click',()=>{
+  const dark=document.documentElement.classList.toggle('theme-dark');
+  localStorage.setItem('hooyarTheme',dark?'dark':'light');themeIcon();
+});
+document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',()=>{
+  document.querySelectorAll('.nav a').forEach(x=>x.classList.remove('selected'));a.classList.add('selected');
+}));
 
-            document.getElementById('customerName').textContent = customer.name + ' ' + (customer.family_name || '');
+const kvTitle=t=>`<div class="kv-title">${t}</div>`;
+const kvRows=rows=>`<div class="kv">`+rows.map(([k,v])=>`<div><div class="k">${k}</div><div class="v${v?'':' missing'}">${v?safe(v):'—'}</div></div>`).join('')+`</div>`;
 
-            document.getElementById('name').textContent = customer.name || '-';
-            document.getElementById('family_name').textContent = customer.family_name || '-';
-            document.getElementById('father_name').textContent = customer.father_name || '-';
-            document.getElementById('birth_date').textContent = customer.birth_date || '-';
-            document.getElementById('mobile_phone').textContent = customer.mobile_phone || '-';
+async function loadProfile(){
+  try{
+    const data=await api('/customer/profile');
+    displayProfile(data.customer,data.services||[]);
+  }catch(e){
+    document.getElementById('loadingMsg').textContent=e.message;
+  }
+}
+function displayProfile(customer,services){
+  document.getElementById('loadingMsg').style.display='none';
+  document.getElementById('customerInfo').style.display='block';
+  const fullName=[customer.name,customer.family_name].filter(Boolean).join(' ');
+  document.getElementById('customerNameSide').textContent=fullName||'مشتری';
+  document.getElementById('avatar').textContent=(customer.name||'م').slice(0,1);
+  document.getElementById('idAvatar').textContent=(customer.name||'؟').slice(0,1);
+  document.getElementById('idName').textContent=fullName||'—';
+  const sb=document.getElementById('statusBadge');
+  sb.className='badge '+(customer.status==='فعال'?'ok':customer.status==='مسدود'?'off':'wait');
+  sb.textContent='وضعیت حساب: '+(customer.status||'نامشخص');
+  const vb=document.getElementById('verifyBadge');
+  vb.className='badge '+(customer.verification==='تأیید شده'?'ok':customer.verification==='رد شده'?'off':'wait');
+  vb.textContent='بررسی هویت: '+(customer.verification||'در انتظار بررسی');
+  document.getElementById('chipRegNo').textContent=customer.registration_no||'—';
+  try{document.getElementById('chipJoined').textContent='عضو از '+new Intl.DateTimeFormat('fa-IR',{dateStyle:'long'}).format(new Date(String(customer.created_at||'').replace(' ','T')))}catch{document.getElementById('chipJoined').textContent='—'}
 
-            document.getElementById('education').textContent = customer.education || '-';
-            document.getElementById('language').textContent = customer.language || '-';
-            document.getElementById('ethnicity').textContent = customer.ethnicity || '-';
-            document.getElementById('marital_status').textContent = customer.marital_status || '-';
+  const contactForm=document.getElementById('contactForm');
+  contactForm.address.value=customer.address||'';
+  contactForm.phone_secondary.value=customer.phone_secondary||'';
 
-            document.getElementById('province').textContent = customer.province || '-';
-            document.getElementById('state').textContent = customer.state || '-';
-            document.getElementById('service_location').textContent = customer.service_location || '-';
+  document.getElementById('identityBody').innerHTML=
+    kvTitle('هویت')+kvRows([['نام',customer.name],['نام خانوادگی',customer.family_name],['نام پدر',customer.father_name],['نام پدربزرگ',customer.grandfather_name],['کد ملی',customer.national_id],['تاریخ تولد',customer.birth_date],['جنسیت',customer.gender],['گروه خون',customer.blood_type]])
+    +kvTitle('تحصیل و اجتماعی')+kvRows([['تحصیلات',customer.education],['زبان',customer.language],['قومیت',customer.ethnicity],['دین',customer.religion],['وضعیت تأهل',customer.marital_status],['تعداد فرزندان',customer.children_count],['شغل',customer.job]])
+    +kvTitle('نشانی و مدرک')+kvRows([['استان',customer.province],['ولسوالی',customer.district],['ولایت',customer.state],['محل خدمت',customer.service_location],['موبایل',customer.mobile_phone],['نوع مدرک',customer.document_type],['شماره مدرک',customer.document_number],['یادداشت سامانه',customer.notes]]);
 
-            document.getElementById('document_type').textContent = customer.document_type || '-';
-            document.getElementById('document_number').textContent = customer.document_number || '-';
+  const list=document.getElementById('serviceList');
+  document.getElementById('svcCount').textContent=fa.format((services||[]).length)+' درخواست ثبت‌شده';
+  list.innerHTML='';
+  if(!services.length){list.innerHTML='<div class="svc-empty">هنوز درخواستی ثبت نشده است. با تکمیل فرم بالا اولین درخواست خود را ثبت کنید.</div>';return}
+  services.forEach(s=>{
+    list.insertAdjacentHTML('beforeend',`<div class="svc-item"><div class="svc-dot">${I('briefcase')}</div><div class="svc-body"><div class="svc-title">${safe(s.title||'—')}<span class="badge ${statusColor(s.status)}">${safe(s.status||'—')}</span></div>${s.description?`<div class="svc-desc">${safe(s.description)}</div>`:''}<div class="svc-meta">ثبت: ${safe(s.created_at||'—')}</div></div></div>`);
+  });
+}
 
-            const statusElement = document.getElementById('status');
-            const statusBadge = `<span class="status-badge ${customer.status === 'فعال' ? 'status-active' : 'status-inactive'}">${customer.status || 'نامشخص'}</span>`;
-            statusElement.innerHTML = statusBadge;
+document.getElementById('contactForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const msg=document.getElementById('contactMsg');
+  msg.className='form-msg';msg.textContent='';
+  const payload=Object.fromEntries(new FormData(e.currentTarget));
+  try{
+    const d=await api('/customer/profile/contact',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    msg.textContent=d.message||'اطلاعات تماس به‌روزرسانی شد';msg.classList.add('ok');
+    notify('اطلاعات تماس به‌روزرسانی شد');
+  }catch(err){msg.textContent=err.message;msg.classList.add('bad');notify(err.message,true)}
+});
 
-            if (customer.activity_history) {
-                document.getElementById('activity_history').textContent = customer.activity_history;
-            } else {
-                document.getElementById('activityCard').style.display = 'none';
-            }
+document.getElementById('passwordForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const msg=document.getElementById('passwordMsg');
+  msg.className='form-msg';msg.textContent='';
+  const payload=Object.fromEntries(new FormData(e.currentTarget));
+  try{
+    const d=await api('/customer/change-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    msg.textContent=d.message||'رمز عبور تغییر کرد';msg.classList.add('ok');
+    e.currentTarget.reset();notify('رمز عبور با موفقیت تغییر کرد');
+  }catch(err){msg.textContent=err.message;msg.classList.add('bad');notify(err.message,true)}
+});
 
-            if (customer.notes) {
-                document.getElementById('notes').textContent = customer.notes;
-            } else {
-                document.getElementById('notesCard').style.display = 'none';
-            }
+document.getElementById('serviceForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const msg=document.getElementById('serviceMessage');
+  msg.className='form-msg';msg.textContent='';
+  const payload=Object.fromEntries(new FormData(e.currentTarget));
+  try{
+    const d=await api('/customer/services',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    msg.textContent=d.message||'درخواست شما ثبت شد';msg.classList.add('ok');
+    e.currentTarget.reset();loadProfile();
+  }catch(err){msg.textContent=err.message;msg.classList.add('bad')}
+});
 
-            const serviceList = document.getElementById('serviceList');
-            serviceList.textContent = '';
-            if (!services.length) {
-                serviceList.textContent = 'هنوز درخواستی ثبت نشده است.';
-            } else {
-                services.forEach(service => {
-                    const item = document.createElement('div');
-                    item.style.cssText = 'padding:12px;border:1px solid #eee;border-radius:8px';
-                    const title = document.createElement('strong');
-                    title.textContent = `${service.title} — ${service.status}`;
-                    const description = document.createElement('p');
-                    description.textContent = service.description || '';
-                    description.style.cssText = 'margin-top:6px;color:#666';
-                    item.append(title, description);
-                    serviceList.append(item);
-                });
-            }
-        }
-
-        document.getElementById('serviceForm').addEventListener('submit', async event => {
-            event.preventDefault();
-            const form = event.currentTarget;
-            const message = document.getElementById('serviceMessage');
-            const payload = Object.fromEntries(new FormData(form));
-            try {
-                const response = await fetch(`${API_URL}/customer/services`, {
-                    method: 'POST',
-                    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const result = await response.json();
-                message.textContent = result.message || 'خطا در ثبت درخواست';
-                if (response.ok && result.success) {
-                    form.reset();
-                    loadProfile();
-                }
-            } catch {
-                message.textContent = 'خطا در اتصال به سرور';
-            }
-        });
-
-        function logout() {
-            localStorage.removeItem('customerToken');
-            localStorage.removeItem('customerInfo');
-            window.location.href = 'customer-login.html';
-        }
-
-        loadProfile();
-    </script>
+mountIcons();themeIcon();
+loadProfile();
+</script>
 </body>
 </html>

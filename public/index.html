@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>هویار | سامانه مدیریت هویت و پرونده‌های شهروندی</title>
+<link rel="stylesheet" href="/styles/design-system.css">
+</head>
+<body class="landing">
+
+<header class="site-head">
+  <div class="brand"><div class="brand-mark">ه</div><div><strong>هویار</strong><small>سامانه مدیریت هویت</small></div></div>
+  <nav>
+    <a class="btn btn-ghost btn-sm" href="#features">امکانات</a>
+    <a class="btn btn-ghost btn-sm" href="#how">فرآیند</a>
+    <a class="btn btn-primary btn-sm" href="admin-login.html">ورود کارشناسان</a>
+    <a class="btn btn-outline btn-sm" href="customer-login.html">ورود شهروندان</a>
+  </nav>
+</header>
+
+<main>
+  <section class="landing-hero">
+    <div class="wrap">
+      <div>
+        <span class="kicker"><span class="dot"></span>زیرساخت دیجیتال هویت و ثبت احوال</span>
+        <h1>پرونده‌ی هویتی شهروند،<br>در یک سامانه‌ی مطمئن و دقیق</h1>
+        <p class="lead">
+          هویار سامانه‌ای کامل برای ثبت و مدیریت پرونده‌های هویتی است: ثبت اطلاعات شهروندان،
+          بررسی کارشناسی، پیگیری درخواست‌های خدمات و گزارش‌های آماری — همه در یک پنل فارسی،
+          راست‌چین و امن.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="customer-login.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            ورود شهروندان
+          </a>
+          <a class="btn btn-outline" href="admin-login.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            ورود کارشناسان و مدیران
+          </a>
+        </div>
+        <div class="hero-chips">
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>بررسی کارشناسی پرونده</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>ورود دومرحله‌ای (TOTP)</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>گزارش آماری زنده</span>
+        </div>
+      </div>
+      <div class="hero-panel rise">
+        <div class="hero-panel-head"><span class="traffic"><i></i><i></i><i></i></span><span>پنل عملیات هویت</span></div>
+        <div class="hero-panel-body">
+          <div class="mini-row"><div class="av">م</div><div class="who"><b>پرونده‌های ثبت‌شده</b><small>مجموع ثبت‌های سامانه</small></div><b class="mono-num" id="hpTotal">—</b></div>
+          <div class="mini-row"><div class="av">ب</div><div class="who"><b>در انتظار بررسی کارشناسی</b><small>صف اقدام کارشناس</small></div><b class="mono-num" id="hpPending">—</b></div>
+          <div class="mini-row"><div class="av">ت</div><div class="who"><b>تأییدشده</b><small>پرونده‌های بررسی‌شده</small></div><b class="mono-num" id="hpVerified">—</b></div>
+          <div class="mini-row"><div class="av">س</div><div class="who"><b>درخواست خدمات باز</b><small>در انتظار رسیدگی</small></div><b class="mono-num" id="hpServices">—</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="landing-sec" id="features">
+    <div class="wrap">
+      <div class="sec-title">
+        <h2>امکانات سامانه</h2>
+        <p>هر آنچه یک دفتر ثبت مدرن برای مدیریت هویت نیاز دارد</p>
+      </div>
+      <div class="features">
+        <article class="feature">
+          <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg></div>
+          <h3>ثبت پرونده‌ی هویتی</h3>
+          <p>ثبت اطلاعات هویتی شهروند با شناسه‌ی یکتا، شامل هویت، تولد، تحصیلات و مدارک — و ورود خودکار به صف بررسی.</p>
+        </article>
+        <article class="feature">
+          <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+          <h3>جست‌وجو و فیلتر پیشرفته</h3>
+          <p>جست‌وجو بر اساس نام، شناسه‌ی پرونده، موبایل و نام پدر؛ فیلتر بر حسب وضعیت، استان، تحصیلات و قومیت.</p>
+        </article>
+        <article class="feature">
+          <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <h3>بررسی کارشناسی و تأیید</h3>
+          <p>صف بررسی پرونده‌ها با بررسی جزئیات هر پرونده و ثبت نتیجه‌ی تأیید یا رد با گزارش رویداد.</p>
+        </article>
+        <article class="feature">
+          <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+          <h3>درخواست خدمات شهروندی</h3>
+          <p>ثبت درخواست خدمت توسط شهروند و پیگیری وضعیت آن در پنل کاربری؛ رسیدگی کارشناس با تغییر وضعیت.</p>
+        </article>
+        <article class="feature">
+          <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <h3>امنیت چندلایه</h3>
+          <p>گذرواژه‌های هش‌شده، توکن JWT، ورود دومرحله‌ای با کد یک‌بارمصرف، محدودیت تلاش ورود و گزارش کامل فعالیت.</p>
+        </article>
+        <article class="feature">
+          <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></div>
+          <h3>گزارش و آمار</h3>
+          <p>آمار زنده‌ی پرونده‌ها، روند ثبت ماهانه، توزیع جغرافیایی و آموزشي، و خروجی CSV از پرونده‌ها.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="landing-sec" id="how" style="background:var(--surface-2);border-block:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sec-title">
+        <h2>فرآیند کار چه صورت است؟</h2>
+        <p>از ثبت تا تأیید، سه گام روشن</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="no">۱</div>
+          <h3>ثبت پرونده</h3>
+          <p>کارشناس اطلاعات هویتی متقاضی را با مدارک پایه ثبت می‌کند و شناسه‌ی یکتا صادر می‌شود.</p>
+        </div>
+        <div class="step">
+          <div class="no">۲</div>
+          <h3>بررسی کارشناسی</h3>
+          <p>پرونده وارد صف بررسی می‌شود؛ کارشناس جزئیات را بررسی و نتیجه را ثبت می‌کند.</p>
+        </div>
+        <div class="step">
+          <div class="no">۳</div>
+          <h3>پیگیری خدمات</h3>
+          <p>شهروند در پنل خود وضعیت پرونده را می‌بیند و درخواست خدمات جدید ثبت و پیگیری می‌کند.</p>
+        </div>
+      </div>
+      <div style="max-width:760px;margin:34px auto 0">
+        <div class="notice">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <div>
+            <b>نسخه‌ی نمایشی.</b> این سامانه یک نمونه‌ی نرم‌افزاری است؛ اتصال به ثبت احوال رسمی، استعلام سند، پیامک،
+            تشخیص چهره یا احراز هویت قانونی در آن پیاده‌سازی نشده است. برچسب «تأیید شده» تنها نتیجه‌ی بررسی داخلی
+            کارشناس است. پیش از استفاده‌ی واقعی، ارزیابی امنیتی و اتصال به سرویس مرجع لازم است.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <span>هویار — سامانه‌ی مدیریت هویت · نسخه‌ی نمایشی</span>
+  <span>طراحی‌شده برای ثبت و مدیریت پرونده‌های هویتی</span>
+</footer>
+
+<script>
+(async () => {
+  const fa = new Intl.NumberFormat('fa-IR');
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = fa.format(v || 0); };
+  try {
+    const r = await fetch('/api/admin/stats');
+    const d = await r.json();
+    if (d.success) {
+      set('hpTotal', d.stats.total);
+      set('hpPending', d.stats.pending);
+      set('hpVerified', d.stats.verified);
+      set('hpServices', d.stats.servicesOpen);
+    }
+  } catch { /* صفحه‌ی فرود بدون آمار هم کار می‌کند */ }
+})();
+</script>
+</body>
+</html>
