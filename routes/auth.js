@@ -41,6 +41,14 @@ function logAdminAction(admin, action, req) {
         .run('admin', admin.username, action, admin.id, req.ip);
 }
 
+function safeDecryptSecret(encrypted) {
+    try {
+        return decryptSecret(encrypted);
+    } catch {
+        return null;
+    }
+}
+
 router.post('/customer/login', throttleLogin, async (req, res) => {
     try {
         const mobile = String(req.body.mobile || '').replace(/[^\d]/g, '');
@@ -104,6 +112,22 @@ router.post('/admin/login', throttleLogin, async (req, res) => {
         const ok = await bcrypt.compare(password, admin.password);
         if (!ok) {
             return res.status(401).json({ success: false, message: 'نام کاربری یا رمز عبور اشتباه است' });
+        }
+
+        // A manager who has set up TOTP must never reach a full admin session
+        // with the password alone: a second database copy, a backup restore, a
+        // rotated secret, or any local password change would otherwise become a
+        // way around the second factor. Remediation has to go through someone
+        // with device access, or through an explicit offline reset procedure.
+        if (admin.mfa_enabled) {
+            const usableSecret = admin.mfa_secret && safeDecryptSecret(admin.mfa_secret);
+            if (!usableSecret) {
+                console.error(`MFA secret for admin ${admin.username} could not be decrypted; blocking password-only login`);
+                return res.status(409).json({
+                    success: false,
+                    message: 'کلید ورود دومرحله‌ای این حساب قابل خواندن نیست؛ برای بازیابی با پشتیبانی تماس بگیرید'
+                });
+            }
         }
 
         loginAttempts.delete(req.loginAttemptKey);

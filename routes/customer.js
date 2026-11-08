@@ -5,17 +5,42 @@ const { authMiddleware, customerMiddleware } = require('../middleware/auth');
 
 const router = express.Router();
 
-const PUBLIC_FIELDS = `
-    id, registration_no, row_number, name, family_name, father_name, grandfather_name,
-    national_id, birth_date, gender, blood_type, education, language, province, district,
-    ethnicity, religion, document_type, document_number, marital_status, children_count,
-    job, activity_history, service_location, state, address, mobile_phone, phone_secondary,
-    photo, status, verification, notes, created_at, updated_at
+// Deliberately narrow: a citizen portal must not expose the analyst's internal
+// notes, document scan numbers, or the sensitive classification fields
+// (ethnicity, religion, blood type, activity history). Those stay admin-only.
+const CUSTOMER_PORTAL_FIELDS = `
+    id, registration_no, name, family_name, father_name, grandfather_name, birth_date, gender,
+    education, language, province, district, state, job, marital_status, children_count,
+    address, mobile_phone, phone_secondary, status, verification, created_at, updated_at
 `;
+
+// Simple per-process limiter for the only customer endpoint that writes data on
+// its own. Eight requests per ten minutes per IP keeps the queue clean without
+// punishing an honest user.
+const SERVICE_WINDOW_MS = 10 * 60 * 1000;
+const SERVICE_MAX_REQUESTS = 8;
+const serviceAttempts = new Map();
+
+function throttleServiceCreation(req, res, next) {
+    const key = req.ip;
+    const now = Date.now();
+    let entry = serviceAttempts.get(key);
+    if (!entry || entry.resetAt <= now) entry = { count: 0, resetAt: now + SERVICE_WINDOW_MS };
+    if (entry.count >= SERVICE_MAX_REQUESTS) {
+        res.set('Retry-After', String(Math.ceil((entry.resetAt - now) / 1000)));
+        return res.status(429).json({ success: false, message: 'تعداد درخواست‌ها بیش از حد مجاز است؛ کمی بعد دوباره تلاش کنید' });
+    }
+    entry.count += 1;
+    serviceAttempts.set(key, entry);
+    if (serviceAttempts.size > 5000) {
+        for (const [candidate, value] of serviceAttempts) if (value.resetAt <= now) serviceAttempts.delete(candidate);
+    }
+    next();
+}
 
 router.get('/profile', authMiddleware, customerMiddleware, async (req, res) => {
     try {
-        const [rows] = await db.query(`SELECT ${PUBLIC_FIELDS} FROM customers WHERE id = ?`, [req.user.id]);
+        const [rows] = await db.query(`SELECT ${CUSTOMER_PORTAL_FIELDS} FROM customers WHERE id = ?`, [req.user.id]);
         if (!rows.length) return res.status(404).json({ success: false, message: 'پرونده یافت نشد' });
 
         const [services] = await db.query(
@@ -30,7 +55,7 @@ router.get('/profile', authMiddleware, customerMiddleware, async (req, res) => {
     }
 });
 
-router.post('/services', authMiddleware, customerMiddleware, async (req, res) => {
+router.post('/services', authMiddleware, customerMiddleware, throttleServiceCreation, async (req, res) => {
     try {
         const title = String(req.body.title || '').trim().slice(0, 120);
         const description = String(req.body.description || '').trim().slice(0, 1000);

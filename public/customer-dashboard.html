@@ -180,9 +180,9 @@ function displayProfile(customer,services){
   contactForm.phone_secondary.value=customer.phone_secondary||'';
 
   document.getElementById('identityBody').innerHTML=
-    kvTitle('هویت')+kvRows([['نام',customer.name],['نام خانوادگی',customer.family_name],['نام پدر',customer.father_name],['نام پدربزرگ',customer.grandfather_name],['کد ملی',customer.national_id],['تاریخ تولد',customer.birth_date],['جنسیت',customer.gender],['گروه خون',customer.blood_type]])
-    +kvTitle('تحصیل و اجتماعی')+kvRows([['تحصیلات',customer.education],['زبان',customer.language],['قومیت',customer.ethnicity],['دین',customer.religion],['وضعیت تأهل',customer.marital_status],['تعداد فرزندان',customer.children_count],['شغل',customer.job]])
-    +kvTitle('نشانی و مدرک')+kvRows([['استان',customer.province],['ولسوالی',customer.district],['ولایت',customer.state],['محل خدمت',customer.service_location],['موبایل',customer.mobile_phone],['نوع مدرک',customer.document_type],['شماره مدرک',customer.document_number],['یادداشت سامانه',customer.notes]]);
+    kvTitle('هویت')+kvRows([['نام',customer.name],['نام خانوادگی',customer.family_name],['نام پدر',customer.father_name],['نام پدربزرگ',customer.grandfather_name],['تاریخ تولد',customer.birth_date],['جنسیت',customer.gender]])
+    +kvTitle('تحصیل و اجتماعی')+kvRows([['تحصیلات',customer.education],['زبان',customer.language],['وضعیت تأهل',customer.marital_status],['تعداد فرزندان',customer.children_count],['شغل',customer.job]])
+    +kvTitle('نشانی و تماس')+kvRows([['استان',customer.province],['ولسوالی',customer.district],['ولایت',customer.state],['موبایل',customer.mobile_phone]]);
 
   const list=document.getElementById('serviceList');
   document.getElementById('svcCount').textContent=fa.format((services||[]).length)+' درخواست ثبت‌شده';
