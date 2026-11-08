@@ -4,6 +4,25 @@ const db = require('../config/database');
 const { authMiddleware, adminMiddleware } = require('../middleware/auth');
 
 const router = express.Router();
+// Public headline numbers for the landing page. Aggregate only — no record
+// names, no personal data, no per-record detail.
+router.get('/public-summary', async (req, res) => {
+    try {
+        const one = async (sql) => (await db.query(sql))[0][0].c;
+        res.json({
+            success: true,
+            summary: {
+                total: await one('SELECT COUNT(*) AS c FROM customers'),
+                verified: await one("SELECT COUNT(*) AS c FROM customers WHERE verification = 'تأیید شده'"),
+                servicesOpen: await one("SELECT COUNT(*) AS c FROM services WHERE status != 'انجام شده'")
+            }
+        });
+    } catch (error) {
+        console.error('Get public summary error:', error);
+        res.status(500).json({ success: false, message: 'خطا در دریافت آمار' });
+    }
+});
+
 router.use(authMiddleware, adminMiddleware);
 
 const FIELDS = [
@@ -13,6 +32,50 @@ const FIELDS = [
     'job', 'activity_history', 'service_location', 'state', 'address', 'mobile_phone',
     'phone_secondary', 'photo', 'status', 'verification', 'notes', 'row_number'
 ];
+
+const NUMERIC_FIELDS = { children_count: 0, row_number: 1 };
+const TEXT_LIMITS = {
+    name: 100, family_name: 100, father_name: 100, grandfather_name: 100,
+    national_id: 30, birth_date: 20, gender: 20, blood_type: 10, education: 80,
+    language: 120, province: 80, district: 80, ethnicity: 80, religion: 40,
+    document_type: 60, document_number: 60, marital_status: 30, job: 120,
+    activity_history: 1000, service_location: 120, state: 80, address: 500,
+    phone_secondary: 15, photo: 500, notes: 2000
+};
+const ALLOWED = {
+    status: ['فعال', 'غیرفعال', 'مسدود'],
+    verification: ['در انتظار بررسی', 'تأیید شده', 'رد شده']
+};
+
+// Returns an error message for invalid input, or null when the payload is fine.
+// Fields absent from the payload are not validated (partial updates are legal).
+function validateCustomerInput(data) {
+    for (const [field, max] of Object.entries(TEXT_LIMITS)) {
+        if (!Object.prototype.hasOwnProperty.call(data, field) || data[field] === null) continue;
+        if (String(data[field]).length > max) {
+            return `مقدار فیلد «${field}» بیش از ${max} نویسه است`;
+        }
+    }
+    for (const [field, min] of Object.entries(NUMERIC_FIELDS)) {
+        if (!Object.prototype.hasOwnProperty.call(data, field) || data[field] === null || data[field] === '') continue;
+        const value = Number(data[field]);
+        if (!Number.isInteger(value) || value < min || value > 100) {
+            return `مقدار فیلد «${field}» باید عددی بین ${min} و ۱۰۰ باشد`;
+        }
+    }
+    for (const [field, allowed] of Object.entries(ALLOWED)) {
+        if (!Object.prototype.hasOwnProperty.call(data, field) || !data[field]) continue;
+        if (!allowed.includes(data[field])) return `مقدار فیلد «${field}» نامعتبر است`;
+    }
+    if (data.national_id) {
+        const digits = String(data.national_id).replace(/[^\d]/g, '');
+        if (digits.length < 6 || digits.length > 20) return 'کد ملی معتبر نیست';
+    }
+    if (Object.prototype.hasOwnProperty.call(data, 'name') && !String(data.name || '').trim()) {
+        return 'نام نمی‌تواند خالی باشد';
+    }
+    return null;
+}
 
 function buildFilters(query) {
     const where = [];
@@ -131,8 +194,14 @@ router.post('/customers', async (req, res) => {
             return res.status(400).json({ success: false, message: 'گذرواژه باید حداقل ۸ کاراکتر باشد' });
         }
 
+        const invalid = validateCustomerInput(data);
+        if (invalid) return res.status(400).json({ success: false, message: invalid });
+
         const createFields = FIELDS.filter(field => !['mobile_phone', 'row_number', 'status', 'verification'].includes(field));
-        const values = createFields.map(field => data[field] ?? null);
+        const values = createFields.map(field => {
+            const value = data[field] ?? null;
+            return field === 'children_count' && value !== null ? Number(value) : value;
+        });
         const insertFields = [...createFields, 'mobile_phone', 'password', 'status', 'verification'];
         const hashed = await bcrypt.hash(password, 10);
         const placeholders = insertFields.map(() => '?').join(', ');
@@ -151,8 +220,9 @@ router.post('/customers', async (req, res) => {
         res.status(201).json({ success: true, message: 'پرونده با موفقیت ثبت شد', id,
             registration_no: `AF-${String(id).padStart(6, '0')}` });
     } catch (error) {
-        if (String(error.message).includes('UNIQUE')) {
-            return res.status(400).json({ success: false, message: 'این شماره موبایل قبلاً ثبت شده است' });
+        const uniqueMessage = db.uniqueConstraintMessage(error);
+        if (uniqueMessage) {
+            return res.status(400).json({ success: false, message: uniqueMessage });
         }
         console.error('Create customer error:', error);
         res.status(500).json({ success: false, message: 'خطا در ثبت پرونده' });
@@ -165,31 +235,49 @@ router.put('/customers/:id', async (req, res) => {
         if (!existing.length) return res.status(404).json({ success: false, message: 'پرونده یافت نشد' });
 
         const data = req.body;
-        const sets = FIELDS.map(f => `${f} = ?`);
-        const params = FIELDS.map(f => data[f] ?? null);
+        const invalid = validateCustomerInput(data);
+        if (invalid) return res.status(400).json({ success: false, message: invalid });
 
-        if (data.mobile_phone) {
-            params[FIELDS.indexOf('mobile_phone')] = String(data.mobile_phone).replace(/[^\d]/g, '');
+        const sets = [];
+        const params = [];
+
+        // Only update fields the client actually sent, so a partial payload can
+        // never wipe the rest of the record to NULL.
+        for (const field of FIELDS) {
+            if (!Object.prototype.hasOwnProperty.call(data, field)) continue;
+            let value = data[field] ?? null;
+            if (field === 'mobile_phone') value = String(value).replace(/[^\d]/g, '');
+            if (field === 'children_count' && value !== null) value = Number(value);
+            sets.push(`${field} = ?`);
+            params.push(value);
         }
 
         if (data.password) {
-            if (String(data.password).length < 6) {
-                return res.status(400).json({ success: false, message: 'رمز عبور باید حداقل ۶ کاراکتر باشد' });
+            if (String(data.password).length < 8) {
+                return res.status(400).json({ success: false, message: 'رمز عبور باید حداقل ۸ کاراکتر باشد' });
             }
+            // Setting the password here must not clear the MFA registration:
+            // doing so would let an admin strip their own second factor. Disabling
+            // MFA happens only through /api/auth/admin/mfa/disable, which needs the
+            // current password AND a valid TOTP code.
             sets.push('password = ?');
             params.push(await bcrypt.hash(data.password, 10));
         }
+
+        if (!sets.length) return res.status(400).json({ success: false, message: 'تغییری مشخص نشده' });
 
         sets.push('updated_at = CURRENT_TIMESTAMP');
         params.push(req.params.id);
 
         await db.query(`UPDATE customers SET ${sets.join(', ')} WHERE id = ?`, params);
-        db.log('admin', req.user.username, 'ویرایش پرونده', req.params.id, data.name, null, req.ip);
+        db.log('admin', req.user.username, 'ویرایش پرونده', req.params.id, data.name || null,
+               data.password ? 'شامل تغییر گذرواژه' : null, req.ip);
 
         res.json({ success: true, message: 'پرونده به‌روزرسانی شد' });
     } catch (error) {
-        if (String(error.message).includes('UNIQUE')) {
-            return res.status(400).json({ success: false, message: 'این شماره موبایل قبلاً ثبت شده است' });
+        const uniqueMessage = db.uniqueConstraintMessage(error);
+        if (uniqueMessage) {
+            return res.status(400).json({ success: false, message: uniqueMessage });
         }
         console.error('Update customer error:', error);
         res.status(500).json({ success: false, message: 'خطا در به‌روزرسانی پرونده' });
@@ -234,6 +322,8 @@ router.delete('/customers/:id', async (req, res) => {
         const [rows] = await db.query('SELECT name, family_name, registration_no FROM customers WHERE id = ?', [req.params.id]);
         if (!rows.length) return res.status(404).json({ success: false, message: 'پرونده یافت نشد' });
 
+        // CASCADE removes the customer's service requests too; the audit trail
+        // stays behind on purpose so deletions remain traceable.
         await db.query('DELETE FROM customers WHERE id = ?', [req.params.id]);
         db.log('admin', req.user.username, 'حذف پرونده', req.params.id,
                `${rows[0].name} ${rows[0].family_name}`, rows[0].registration_no, req.ip);

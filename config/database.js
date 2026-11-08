@@ -20,6 +20,18 @@ function log(actorType, actorName, action, targetId = null, targetName = null, d
     ).run(actorType, actorName, action, targetId, targetName, detail, ip);
 }
 
+// Translates an SQLite UNIQUE violation into a field-specific message so the
+// client learns which value collided instead of always blaming the mobile number.
+function uniqueConstraintMessage(error) {
+    const message = String(error?.message || '');
+    if (error?.code !== 'SQLITE_CONSTRAINT_UNIQUE' && !message.includes('UNIQUE constraint failed')) return null;
+    if (message.includes('national_id')) return 'این کد ملی قبلاً در سامانه ثبت شده است';
+    if (message.includes('mobile_phone')) return 'این شماره موبایل قبلاً ثبت شده است';
+    if (message.includes('registration_no')) return 'شماره پرونده تکراری است';
+    return 'مقدار ورودی یکتا نیست و قبلاً ثبت شده است';
+}
+
 module.exports = new DatabaseWrapper();
 module.exports.log = log;
 module.exports.raw = db;
+module.exports.uniqueConstraintMessage = uniqueConstraintMessage;

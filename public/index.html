@@ -49,7 +49,6 @@
         <div class="hero-panel-head"><span class="traffic"><i></i><i></i><i></i></span><span>پنل عملیات هویت</span></div>
         <div class="hero-panel-body">
           <div class="mini-row"><div class="av">م</div><div class="who"><b>پرونده‌های ثبت‌شده</b><small>مجموع ثبت‌های سامانه</small></div><b class="mono-num" id="hpTotal">—</b></div>
-          <div class="mini-row"><div class="av">ب</div><div class="who"><b>در انتظار بررسی کارشناسی</b><small>صف اقدام کارشناس</small></div><b class="mono-num" id="hpPending">—</b></div>
           <div class="mini-row"><div class="av">ت</div><div class="who"><b>تأییدشده</b><small>پرونده‌های بررسی‌شده</small></div><b class="mono-num" id="hpVerified">—</b></div>
           <div class="mini-row"><div class="av">س</div><div class="who"><b>درخواست خدمات باز</b><small>در انتظار رسیدگی</small></div><b class="mono-num" id="hpServices">—</b></div>
         </div>
@@ -145,13 +144,12 @@
   const fa = new Intl.NumberFormat('fa-IR');
   const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = fa.format(v || 0); };
   try {
-    const r = await fetch('/api/admin/stats');
+    const r = await fetch('/api/admin/public-summary');
     const d = await r.json();
     if (d.success) {
-      set('hpTotal', d.stats.total);
-      set('hpPending', d.stats.pending);
-      set('hpVerified', d.stats.verified);
-      set('hpServices', d.stats.servicesOpen);
+      set('hpTotal', d.summary.total);
+      set('hpVerified', d.summary.verified);
+      set('hpServices', d.summary.servicesOpen);
     }
   } catch { /* صفحه‌ی فرود بدون آمار هم کار می‌کند */ }
 })();
