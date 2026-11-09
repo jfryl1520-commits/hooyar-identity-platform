@@ -81,8 +81,7 @@ router.put('/profile/contact', authMiddleware, customerMiddleware, async (req, r
         await db.query('UPDATE customers SET address = ?, phone_secondary = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
             [address, phone, req.user.id]);
 
-        db.raw.prepare('INSERT INTO audit_logs (actor_type, actor_name, action, target_id, ip) VALUES (?,?,?,?,?)')
-            .run('customer', req.user.mobile, 'به‌روزرسانی اطلاعات تماس', req.user.id, req.ip);
+        await db.log('customer', req.user.mobile, 'به‌روزرسانی اطلاعات تماس', req.user.id, null, null, req.ip);
 
         res.json({ success: true, message: 'اطلاعات تماس به‌روزرسانی شد' });
     } catch (error) {
@@ -111,8 +110,7 @@ router.post('/change-password', authMiddleware, customerMiddleware, async (req, 
         const hashed = await bcrypt.hash(new_password, 10);
         await db.query('UPDATE customers SET password = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?', [hashed, req.user.id]);
 
-        db.raw.prepare('INSERT INTO audit_logs (actor_type, actor_name, action, target_id, ip) VALUES (?,?,?,?,?)')
-            .run('customer', req.user.mobile, 'تغییر رمز عبور', req.user.id, req.ip);
+        await db.log('customer', req.user.mobile, 'تغییر رمز عبور', req.user.id, null, null, req.ip);
 
         res.json({ success: true, message: 'رمز عبور تغییر کرد' });
     } catch (error) {

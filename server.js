@@ -81,9 +81,14 @@ app.use((err, req, res, next) => {
     });
 });
 
-const PORT = process.env.PORT || 3000;
+// Netlify imports this module to build a function, so opening a listening
+// socket must only happen when the file is run directly (npm start).
+if (require.main === module) {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, process.env.HOST || '0.0.0.0', () => {
+        console.log(`🚀 سرور روی پورت ${PORT} راه‌اندازی شد`);
+        console.log(`📍 آدرس: http://localhost:${PORT}`);
+    });
+}
 
-app.listen(PORT, process.env.HOST || '0.0.0.0', () => {
-    console.log(`🚀 سرور روی پورت ${PORT} راه‌اندازی شد`);
-    console.log(`📍 آدرس: http://localhost:${PORT}`);
-});
+module.exports = app;

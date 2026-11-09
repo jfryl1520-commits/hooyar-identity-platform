@@ -1,27 +1,5 @@
-const db = require('./schema');
+const { ready, db } = require('./schema');
 
-class DatabaseWrapper {
-    async query(sql, params = []) {
-        const head = sql.trim().slice(0, 6).toUpperCase();
-        const stmt = db.prepare(sql);
-
-        if (head.startsWith('SELECT') || head.startsWith('PRAGMA') || head.startsWith('WITH')) {
-            return [params.length ? stmt.all(...params) : stmt.all()];
-        }
-
-        const info = params.length ? stmt.run(...params) : stmt.run();
-        return [{ insertId: info.lastInsertRowid, affectedRows: info.changes }];
-    }
-}
-
-function log(actorType, actorName, action, targetId = null, targetName = null, detail = null, ip = null) {
-    db.prepare(
-        'INSERT INTO audit_logs (actor_type, actor_name, action, target_id, target_name, detail, ip) VALUES (?, ?, ?, ?, ?, ?, ?)'
-    ).run(actorType, actorName, action, targetId, targetName, detail, ip);
-}
-
-// Translates an SQLite UNIQUE violation into a field-specific message so the
-// client learns which value collided instead of always blaming the mobile number.
 function uniqueConstraintMessage(error) {
     const message = String(error?.message || '');
     if (error?.code !== 'SQLITE_CONSTRAINT_UNIQUE' && !message.includes('UNIQUE constraint failed')) return null;
@@ -31,7 +9,37 @@ function uniqueConstraintMessage(error) {
     return 'مقدار ورودی یکتا نیست و قبلاً ثبت شده است';
 }
 
+class DatabaseWrapper {
+    // Awaits schema creation so the first request on a cold serverless
+    // container cannot race the CREATE TABLE / seeding steps.
+    async query(sql, params = []) {
+        await ready;
+
+        const head = sql.trim().slice(0, 6).toUpperCase();
+        const reads = /^(SELECT|PRAGMA|WITH)/.test(head);
+
+        if (reads) {
+            return [await db.all(sql, params)];
+        }
+        const info = await db.run(sql, params);
+        return [{ insertId: Number(info.lastInsertRowid), affectedRows: Number(info.changes) }];
+    }
+
+    async insertLog(actorType, actorName, action, targetId = null, targetName = null, detail = null, ip = null) {
+        await this.query(
+            'INSERT INTO audit_logs (actor_type, actor_name, action, target_id, target_name, detail, ip) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [actorType, actorName, action, targetId, targetName, detail, ip]);
+    }
+
+    async log(actorType, actorName, action, targetId = null, targetName = null, detail = null, ip = null) {
+        try {
+            await this.insertLog(actorType, actorName, action, targetId, targetName, detail, ip);
+        } catch (error) {
+            // A failed audit write must never break the operation it records.
+            console.error('Audit log write failed:', error.message);
+        }
+    }
+}
+
 module.exports = new DatabaseWrapper();
-module.exports.log = log;
-module.exports.raw = db;
 module.exports.uniqueConstraintMessage = uniqueConstraintMessage;
