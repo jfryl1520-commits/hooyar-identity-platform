@@ -1,0 +1,37 @@
+[build]
+  # The static site lives in public/, not the repository root.
+  publish = "public"
+  functions = "netlify/functions"
+  command = "npm ci"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[functions]
+  node_bundler = "esbuild"
+  # Kept as a runtime require: the local SQLite driver is only loaded when no
+  # cloud database is configured, so the native binary is never needed here.
+  external_node_modules = ["better-sqlite3"]
+
+# The Express app is mounted behind a single function. Rewrites (not redirects)
+# so the browser keeps its original URL.
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/health"
+  to = "/.netlify/functions/api/health"
+  status = 200
+  force = true
+
+# Mirrors the headers Express sets for locally served pages.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"

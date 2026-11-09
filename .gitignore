@@ -9,3 +9,4 @@ config/database.sqlite
 database.sqlite-*
 import-data.js
 exports/
+.netlify/

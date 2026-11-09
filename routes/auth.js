@@ -36,9 +36,8 @@ function issueAdminToken(admin) {
     );
 }
 
-function logAdminAction(admin, action, req) {
-    db.raw.prepare('INSERT INTO audit_logs (actor_type, actor_name, action, target_id, ip) VALUES (?,?,?,?,?)')
-        .run('admin', admin.username, action, admin.id, req.ip);
+async function logAdminAction(admin, action, req) {
+    await db.log('admin', admin.username, action, admin.id, null, null, req.ip);
 }
 
 function safeDecryptSecret(encrypted) {
@@ -79,9 +78,8 @@ router.post('/customer/login', throttleLogin, async (req, res) => {
             { expiresIn: process.env.JWT_EXPIRES_IN }
         );
 
-        db.raw.prepare('INSERT INTO audit_logs (actor_type, actor_name, action, target_id, target_name, ip) VALUES (?,?,?,?,?,?)')
-            .run('customer', `${customer.name} ${customer.family_name}`, 'ورود به پورتال', customer.id,
-                 customer.registration_no, req.ip);
+        await db.log('customer', `${customer.name} ${customer.family_name}`, 'ورود به پورتال',
+            customer.id, customer.registration_no, null, req.ip);
         loginAttempts.delete(req.loginAttemptKey);
 
         res.json({
@@ -141,7 +139,7 @@ router.post('/admin/login', throttleLogin, async (req, res) => {
         }
 
         await db.query('UPDATE admins SET last_login = CURRENT_TIMESTAMP WHERE id = ?', [admin.id]);
-        logAdminAction(admin, 'ورود به پنل مدیریت', req);
+        await logAdminAction(admin, 'ورود به پنل مدیریت', req);
 
         res.json({
             success: true,
@@ -167,11 +165,14 @@ router.post('/admin/verify-mfa', throttleLogin, async (req, res) => {
             return res.status(401).json({ success: false, message: 'کد یک‌بارمصرف نامعتبر یا استفاده‌شده است' });
         }
 
-        const changed = db.raw.prepare('UPDATE admins SET mfa_last_step = ?, last_login = CURRENT_TIMESTAMP WHERE id = ? AND mfa_last_step < ?')
-            .run(step, admin.id, step);
-        if (!changed.changes) return res.status(401).json({ success: false, message: 'کد یک‌بارمصرف قبلاً استفاده شده است' });
+        // Single compare-and-set statement: if another request already advanced
+        // mfa_last_step past this code, no row matches and the replay is rejected.
+        const [updated] = await db.query(
+            'UPDATE admins SET mfa_last_step = ?, last_login = CURRENT_TIMESTAMP WHERE id = ? AND mfa_last_step < ?',
+            [step, admin.id, step]);
+        if (!updated.affectedRows) return res.status(401).json({ success: false, message: 'کد یک‌بارمصرف قبلاً استفاده شده است' });
         loginAttempts.delete(req.loginAttemptKey);
-        logAdminAction(admin, 'ورود دومرحله‌ای به پنل مدیریت', req);
+        await logAdminAction(admin, 'ورود دومرحله‌ای به پنل مدیریت', req);
         res.json({ success: true, token: issueAdminToken(admin),
             admin: { id: admin.id, username: admin.username, full_name: admin.full_name, role: admin.role } });
     } catch (error) {
@@ -219,7 +220,7 @@ router.post('/admin/mfa/enable', authMiddleware, adminMiddleware, async (req, re
             return res.status(400).json({ success: false, message: 'کد تأیید نامعتبر است' });
         }
         await db.query('UPDATE admins SET mfa_enabled = 1, mfa_last_step = ?, mfa_setup_expires_at = NULL WHERE id = ?', [step, req.user.id]);
-        logAdminAction(req.user, 'فعال‌سازی ورود دومرحله‌ای', req);
+        await logAdminAction(req.user, 'فعال‌سازی ورود دومرحله‌ای', req);
         res.json({ success: true, message: 'ورود دومرحله‌ای فعال شد' });
     } catch (error) {
         console.error('MFA enable error:', error);
@@ -241,7 +242,7 @@ router.post('/admin/mfa/disable', authMiddleware, adminMiddleware, async (req, r
             }
         }
         await db.query('UPDATE admins SET mfa_secret = NULL, mfa_enabled = 0, mfa_last_step = 0, mfa_setup_expires_at = NULL WHERE id = ?', [req.user.id]);
-        logAdminAction(req.user, 'غیرفعال‌سازی ورود دومرحله‌ای', req);
+        await logAdminAction(req.user, 'غیرفعال‌سازی ورود دومرحله‌ای', req);
         res.json({ success: true, message: 'ورود دومرحله‌ای غیرفعال شد' });
     } catch (error) {
         console.error('MFA disable error:', error);
